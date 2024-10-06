@@ -1,6 +1,7 @@
 # Python_Modul_Week_6
+![UML_Week_6](https://github.com/user-attachments/assets/83c62f60-a852-4b63-afc0-d99933d463ea)
 
-![resim](https://github.com/werhereitacademy/week_6/assets/141542413/1b3ec14b-5895-4afc-8cb1-df7c34139323)
+
 #### Overview
 This Python program is a simple Task Management System that allows users to create, edit, track, and display tasks. It uses Object-Oriented Programming (OOP) principles to create a structured system for managing tasks.
 ##### Prerequisites
@@ -61,10 +62,12 @@ Before working on this program, students should have a basic understanding of th
 - By working on these exercises, students can deepen their understanding of OOP principles and improve their Python programming skills.
 
 ##### Exp: Let's consider an example where we create, edit, and track tasks using your program:
-![resim](https://github.com/werhereitacademy/week_6/assets/141542413/bf32d5d1-9b8a-421c-a165-713a32c5460b)
+![image (2)](https://github.com/user-attachments/assets/7b70b1c1-3e67-4bf6-9629-e4badab118d3)
+
 
 ##### Expected Output:
-![resim](https://github.com/werhereitacademy/week_6/assets/141542413/cc842474-4df4-4820-9668-89193eddfec3)
+![image (3)](https://github.com/user-attachments/assets/a80808cc-d02d-4602-96d8-ee951c2b9538)
+
 
 
 ## Hackerrank Questions
