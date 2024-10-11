@@ -1,0 +1,8 @@
+from datetime import datetime, timedelta
+SPECIAL_KEYWORDS = {
+    "today": datetime.now().date(),
+    "tomorrow": datetime.now().date() + timedelta(days=1),
+    "next week": datetime.now().date() + timedelta(weeks=1)}
+
+def get_due_date(keyword):
+    return SPECIAL_KEYWORDS.get(keyword.lower(), None)
