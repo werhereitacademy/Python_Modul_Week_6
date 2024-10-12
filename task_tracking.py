@@ -8,7 +8,7 @@ class TaskTracking:
                 if task.id == id:
                     task.mark_as_complete()
                     print(f"Görev '{id}' tamamlandı olarak işaretlendi.")
-                    return
+                    return 
             print(f"Görev '{id}' bulunamadı.")
         except Exception as e:
             print(f"Hata oluştu: {e}")
