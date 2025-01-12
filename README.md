@@ -1,5 +1,6 @@
 # Python_Modul_Week_6
-![UML_Week_6](https://github.com/user-attachments/assets/83c62f60-a852-4b63-afc0-d99933d463ea)
+![{F117AC8B-E655-458F-85AE-308565E3ED6C}](https://github.com/user-attachments/assets/6c950ca1-f386-43d2-872f-37bc79bd98fb)
+
 
 
 #### Overview
