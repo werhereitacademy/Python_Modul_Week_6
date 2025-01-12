@@ -67,7 +67,8 @@ Before working on this program, students should have a basic understanding of th
 
 
 ##### Expected Output:
-![image (3)](https://github.com/user-attachments/assets/a80808cc-d02d-4602-96d8-ee951c2b9538)
+![{63AE01CD-833A-4229-974B-D9E4E8BA5AFA}](https://github.com/user-attachments/assets/74bcc5db-cc04-4c99-8ca1-c9996d03c5fe)
+
 
 
 
