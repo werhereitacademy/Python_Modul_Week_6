@@ -16,26 +16,30 @@ class Task(ABC):
 
     def days_to_accomplish_task(self):
         today = datetime.today()
-        return (self.deadline - today).days 
+        remaining = (self.deadline - today).days
+        if remaining < 0 :
+            return 0
+        else:
+            return (self.deadline - today).days 
         
     def __str__(self): 
-        return f"id:{self.task_id}, task name:{self.task_name}, deadline:{self.deadline}, task color:{self.color}, task status:{self.status}, task priority:{self.priority}, remaining days:{self.days_to_accomplish_task()}"
+        return f"id:{self.task_id}, task name:{self.task_name}, deadline:{self.deadline}, task color:{self.color_your_task()}, task status:{self.status}, task priority:{self.priority}, remaining days:{self.days_to_accomplish_task()}"
 
 
 
 class PersonalTask(Task):
     def __init__(self, task_id, task_name, deadline):
         super().__init__(task_id, task_name, deadline)
-        self.color = "blue" 
 
     def color_your_task(self): 
-        self.color = "blue" 
+        color = self.color = "blue" 
+        return color
     
 class WorkTask(Task):
     def __init__(self, task_id, task_name, deadline):
         super().__init__(task_id, task_name, deadline)
         self.priority = "high"
-        self.color = "red"
         
     def color_your_task(self):
-        self.color = "red"
+        color = self.color = "red"
+        return color

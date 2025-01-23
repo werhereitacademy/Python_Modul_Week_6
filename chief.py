@@ -34,7 +34,7 @@ def menu():
                 continue
 
             if choice == 1:
-                task_name = input("please enter task name: ")
+                task_name = input("please enter the personel task name: ")
                 while True:
                     try:
                         task_id = int(input("please enter task id: "))
@@ -49,7 +49,7 @@ def menu():
                 print("personal task added successfully!!")
 
             elif choice == 2:
-                task_name = input("enter task name: ")
+                task_name = input("enter the work task name: ")
                 while True:
                     try:
                         task_id = int(input("enter task id: "))
