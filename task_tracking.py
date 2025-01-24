@@ -21,5 +21,6 @@ class TaskTracking:
         for task in self.task_management.task_list:
             if task.task_id == task_id:
                 return task
-        return None
+            else:
+                return None
   

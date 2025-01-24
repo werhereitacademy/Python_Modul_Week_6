@@ -23,7 +23,7 @@ class Task(ABC):
             return (self.deadline - today).days 
         
     def __str__(self): 
-        return f"id:{self.task_id}, task name:{self.task_name}, deadline:{self.deadline}, task color:{self.color_your_task()}, task status:{self.status}, task priority:{self.priority}, remaining days:{self.days_to_accomplish_task()}"
+        return f"id:{self.task_id}, task name:{self.task_name}, deadline:{self.deadline.date()}, task color:{self.color_your_task()}, task status:{self.status}, task priority:{self.priority}, remaining days:{self.days_to_accomplish_task()}"
 
 
 

@@ -68,22 +68,22 @@ def menu():
 
             elif choice == 4: # task edit ----------------------------------
                 if management.task_list:
+                    status = input("enter a new status : ")
                     while True:
                         try:
                             task_id = int(input("enter task id to edit status: "))
-                            status = input("enter a new status : ")
                             break
                         except ValueError:
                             print("invalid input please enter a valid task id")
+                        valueStatus = edit.set_task_status(task_id, status)
+
+                        if valueStatus == None:
+                            print("id not found!")
+                        else:
+                            print(f"task {task_id} status updated to {status}")
                 else:
                     print("there is no task to edit")
 
-                valueStatus = edit.set_task_status(task_id, status)
-
-                if valueStatus == None:
-                    print("id not found!")
-                else:
-                    print(f"task {task_id} status updated to {status}")
             
 
             elif choice == 5:
@@ -95,14 +95,14 @@ def menu():
                             break
                         except ValueError:
                             print("invalid input please enter a valid task id")
+                        valuePriority = edit.set_prioritization(task_id, priority)
+                        if valuePriority == None:
+                            print("id not found!")
+                        else:
+                            print(f"Task {task_id} priority updated to {priority}.")
                 else:
                     print("there  is no task to edit")
 
-                valuePriority = edit.set_prioritization(task_id, priority)
-                if valuePriority == None:
-                    print("id not found!")
-                else:
-                    print(f"Task {task_id} priority updated to {priority}.")
                    
             elif choice == 6:
                 if management.task_list:
@@ -117,14 +117,14 @@ def menu():
                             print("invalid date format please enter the valid format => YYYY-MM-DD!")
 
 
+                        valueDeadline = edit.set_new_date(task_id, deadline)
+                        if valueDeadline == None:
+                            print("id not found!")
+                        else:
+                            print(f"Task {task_id} deadline updated to {deadline}.")
                 else:  
                     print("there is no task to edit")          
                     
-                valueDeadline = edit.set_new_date(task_id, deadline)
-                if valueDeadline == None:
-                    print("id not found!")
-                else:
-                    print(f"Task {task_id} deadline updated to {deadline}.")
                 
             elif choice == 7:
                 if management.task_list:
@@ -134,14 +134,14 @@ def menu():
                             break
                         except ValueError:
                             print("invalid input please enter a valid task id")
+                        valueMark = edit.mark_status_completed(task_id)
+                        if valueMark == None:
+                            print("id not found")
+                        else:
+                            print(f"task {task_id} marked as completed..")
                 else:
                     print("there is no task to edit")
 
-                valueMark = edit.mark_status_completed(task_id)
-                if valueMark == None:
-                    print("id not found")
-                else:
-                    print(f"task {task_id} marked as completed..")
 
             elif choice == 8: # task tracking
                 if management.task_list:
@@ -151,14 +151,14 @@ def menu():
                             break
                         except ValueError:
                             print("invalid input. Please enter a valid task id")
+                        valueColor = track.get_task_color(task_id)
+                        if valueColor == None:    
+                            print("id con not found")
+                        else:
+                            print(f"task {task_id} color is {valueColor}.")
                 else:
                     print("there is no task to get color")
 
-                    valueColor = track.get_task_color(task_id)
-                    if valueColor == None:    
-                        print("di con not found")
-                    else:
-                        print(f"task {task_id} color is {valueColor}.")
                 
 
 
@@ -171,14 +171,14 @@ def menu():
                             break
                         except ValueError:
                             print("invalid input please enter a valid task id")
+                        valueStatus = track.get_task_status(task_id)
+                        if valueStatus == None:
+                            print("id not found")
+                        else:
+                            print(f"task {task_id} status is {status}.")
                 else:
                     print("there is no task to get status")
 
-                valueStatus = track.get_task_status(task_id)
-                if valueStatus == None:
-                    print("id not found")
-                else:
-                    print(f"task {task_id} status is {status}.")
 
 
             elif choice == 10:
@@ -189,13 +189,13 @@ def menu():
                             break
                         except ValueError:
                             print("invalid input please enter a valid task id.")
+                        valueDeadline = track.get_task_deadline(task_id)
+                        if deadline == None:
+                            print("id not found")
+                        else:
+                            print(f"task {task_id} deadline is {deadline}.")
                 else:
                     print("there is no ask to get deadline")    
-                valueDeadline = track.get_task_deadline(task_id)
-                if deadline == None:
-                    print("id not found")
-                else:
-                    print(f"task {task_id} deadline is {deadline}.")
             
             elif choice == 11:
                 print("exiting the menu.")
