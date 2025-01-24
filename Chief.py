@@ -1,7 +1,3 @@
-from datetime import datetime
-
-
-
 from task_management import TaskManagement
 from task_editing import TaskEditing
 from task_tracking import TaskTracking
@@ -40,19 +36,12 @@ tm.display_task()
 
 # Track tasks using TaskTracking
 tt = TaskTracking(tm)
-
 print("\nTask Tracking for Task ID 1:")
-
 tt.get_task_status("1")
-
 tt.get_task_deadline("1")
-
 tt.get_task_color("1")
 
 print("\nTask Tracking for Task ID 31:")
-
 tt.get_task_status("3")
-
 tt.get_task_deadline("3")
-
 tt.get_task_color("3")
