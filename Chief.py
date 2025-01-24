@@ -42,17 +42,17 @@ tm.display_task()
 tt = TaskTracking(tm)
 
 print("\nTask Tracking for Task ID 1:")
-print(f"Status:")
+
 tt.get_task_status("1")
-print("Deadline:")
+
 tt.get_task_deadline("1")
-print("Color:") 
+
 tt.get_task_color("1")
 
 print("\nTask Tracking for Task ID 31:")
-print(f"Status:")
+
 tt.get_task_status("3")
-print("Deadline:")
+
 tt.get_task_deadline("3")
-print("Color:") 
+
 tt.get_task_color("3")
