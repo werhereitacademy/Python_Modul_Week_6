@@ -16,6 +16,7 @@ def create_grid(glist, field_names, field_widths, grid_name):
     separator_middle_row = "╬"
     start_middle_column = "╦"
     end_middle_column = "╩"
+    end_line_corner = ""
     grid = []
     grid_first_row = start_first_row+separator_row*(sum(field_widths)+((len(field_widths)-1)*3))+end_first_row
     grid.append(grid_first_row)
@@ -67,3 +68,24 @@ def create_grid(glist, field_names, field_widths, grid_name):
     grid.append(grid_last_row)
     return grid
 
+class Grid:
+    special_characters = {"f.1":"╔","f.l":"╗","l.1":"╚","l.l":"╝","f.s":"╠","l.s":"╣","m.m":"╬",
+                                 "f.m":"╦","l.m":"╩","fl":"║","fc":"═","ml":"│","mc":"─"}
+    def __init__(self, grid_data=[], grid_name="", field_names=[], field_widths=[]):
+        self.__grid_name = grid_name
+        self.__field_names = field_names
+        self.__field_widths = field_widths
+        self.__gridWidth = sum(field_widths)+((len(field_widths))*3)-1
+        self.__grid_data = grid_data
+        self.__gridFirstLine = self.special_characters["f.1"]+self.special_characters["fc"]*(self.__gridWidth)+self.special_characters["f.l"]
+        self.__gridLastLine = self.special_characters["l.1"]+self.special_characters["fc"]*(self.__gridWidth)+self.special_characters["l.l"]
+        self.__gridMiddleLineNoneField = self.special_characters["f.s"]+self.special_characters["fc"]*(self.__gridWidth)+self.special_characters["l.s"]
+
+    def __draw_grid_header(self):
+        pass
+    def draw_grid(self):
+        """
+        Creates a grid of glist.
+        """
+        pass
+        
