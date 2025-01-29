@@ -1,12 +1,14 @@
 #Module where the Task base class and the PersonnelTask ​​and WorkTask classes are defined
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
-import drawing
+import drawing, os
 
 SPECIAL_KEYWORDS = {
     "today": datetime.now(),
     "tomorrow": datetime.now() + timedelta(days=1),
-    "next week": datetime.now() + timedelta(weeks=1)
+    "next week": datetime.now() + timedelta(weeks=1),
+    "two weeks": datetime.now() + timedelta(weeks=2),
+    "next month": datetime.now() + timedelta(days=30)
 }
 
 # Base abstract class for all tasks
@@ -22,13 +24,16 @@ class Task(ABC):
         self.__color = ""
 
     def parse_deadline(self, deadline):
+        # Parse the deadline string into a datetime object
         if isinstance(deadline, str):
             return SPECIAL_KEYWORDS.get(deadline.lower(), deadline)  
-        if type(deadline) == int:
-            return datetime.now + timedelta(days=deadline)
-        else: 
+        elif isinstance(deadline, int):
+            return datetime.now() + timedelta(days=deadline)
+        elif isinstance(deadline, datetime):
             return deadline
-    
+        else:
+            raise ValueError("Invalid deadline format")
+
     def set_task_id(self, task_id):
         self.__task_id = task_id
     def get_task_id(self):
@@ -95,7 +100,7 @@ class Task(ABC):
 
 """------------------------------------------------------------"""
 # PersonnelTask class for tasks related to personnel
-class PersonnelTask(Task):
+class PersonelTask(Task):
     def __init__(self, task_id, name, deadline):
         super().__init__(task_id, name, deadline)
         self.set_priority("Low")
@@ -116,6 +121,7 @@ class WorkTask(Task):
         self.set_color("Red")
 
 """------------------------------------------------------------"""
+# ExamTask class for tasks related to work
 class ExamTask(Task):
     def __init__(self, task_id, name, deadline):
         super().__init__(task_id, name, deadline)
@@ -201,19 +207,107 @@ class TaskTracking:
     
 """------------------------------------------------------------"""
 
+
+"""------------------------------------------------------------"""
 class Chief:
     def __init__(self):
         self.task_management = TaskManagement()
         self.task_editing = TaskEditing(self.task_management)
         self.task_tracking = TaskTracking(self.task_management)
+        self.main_menu = create_menu()
+    def create_menu(self):
+        return drawing.Menu(["Task Management System"], {
+            "1": {"label": "Add Task", "action": self.add_task},
+            "2": {"label": "Display Tasks", "action": self.task_management.display_tasks},
+            "3": {"label": "Edit Task", "action": self.edit_task},
+            "4": {"label": "Track Task", "action": self.track},
+            "Q": {"label": "Quit / Exit E", "action": self.exit_program}
+        })
+
+    def create_personel_task(self):
+        try:
+            task_id = int(max(self.task_management.get_tasks(), key=lambda x: x["task_id"])["task_id"]) + 1
+            task_name = input("Enter Task Name: ")
+            deadline = input("Enter Deadline (e.g., today, tomorrow, next week, or YYYY-MM-DD): ")
+            task = PersonelTask(task_id, task_name, deadline)
+            self.task_management.add_task(task)
+            print("Task added successfully!")
+            input("Press Enter to continue...")
+        except Exception as e:
+            print("Error:", e)
+            input("Press Enter to continue...")
+    
+    def create_work_task(self):
+        try:
+            task_id = int(max(self.task_management.get_tasks(), key=lambda x: x["task_id"])["task_id"]) + 1
+            task_name = input("Enter Task Name: ")
+            deadline = input("Enter Deadline (e.g., today, tomorrow, next week, or YYYY-MM-DD):")
+            task = WorkTask(task_id, task_name, deadline)
+            self.task_management.add_task(task)
+            print("Task added successfully!")
+            input("Press Enter to continue...")
+        except Exception as e:
+            print("Error:", e)
+            input("Press Enter to continue...")
+    
+    def create_exam_task(self):
+        try:
+            task_id = int(max(self.task_management.get_tasks(), key=lambda x: x["task_id"])["task_id"]) + 1
+            task_name = input("Enter Task Name: ")
+            deadline = input("Enter Deadline (e.g., today, tomorrow, next week, or YYYY-MM-DD): ")
+            task = ExamTask(task_id, task_name, deadline)
+            self.task_management.add_task(task)
+            print("Task added successfully!")
+            input("Press Enter to continue...")
+        except Exception as e:
+            print("Error:", e)
+            input("Press Enter to continue...")
+
+    def add_task(self):
+        task_id = int(max(self.task_management.get_tasks(), key=lambda x: x["task_id"])["task_id"]) + 1
+        task_name = input("Enter Task Name: ")
+        deadline = input("Enter Deadline (e.g., today, tomorrow, next week, or YYYY-MM-DD): ")
+        task_type = input("Enter Task Type (Work/Exam/Pesonel): ").lower()
+        if task_type == "exam":
+            task = ExamTask(task_id, task_name, deadline)
+        elif task_type == "work":
+            task = WorkTask(task_id, task_name, deadline)
+        else:
+            PersonelTask(task_id, task_name, deadline)
+        self.task_management.add_task(task)
+        print("Task added successfully!")
+        input("Press Enter to continue...")
+    
+    def edit_task(self):
+        task_id = int(input("Enter Task ID to edit: "))
+        task = self.task_management.get_task_by_id(task_id)
+        if task:
+            task_editing = TaskEditing(self.task_management)
+            task_editing.set_task_status(task_id, input("Enter New Status: "))
+            task_editing.set_prioritization(task_id, input("Enter New Priority: "))
+            task_editing.set_new_date(task_id, input("Enter New Deadline: "))
+            print("Task edited successfully!")
+        else:
+            print("Task not found.")
+        input("Press Enter to continue...")
+
+
+    def main(self):
+        self.main_menu.show()
+
 
 """------------------------------------------------------------"""
 
 if __name__ == "__main__":
     task_manager = TaskManagement()
-    task_manager.add_task(PersonnelTask(1, "Task 1", datetime(2025, 2, 15)))
+    task_manager.add_task(PersonelTask(1, "Task 1", datetime(2025, 2, 15)))
     task_manager.add_task(WorkTask(2, "Task 2", datetime(2025, 3, 15)))
     task_manager.add_task(ExamTask(3,"Task 3","Next Week"))
+    task_manager.add_task(ExamTask(4,"Task 4",5))
     grid = drawing.create_grid(task_manager.get_tasks(), task_manager.get_fields(),[8, 15, 19, 19, 10, 10, 10],"Task Management")
     for i in grid:
         print(i)
+
+    # chief = Chief()
+    # chief.main()
+    

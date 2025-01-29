@@ -1,4 +1,4 @@
-
+import os
 def create_grid(glist, field_names, field_widths, grid_name):
     """
     Creates a grid of glist.
@@ -88,4 +88,53 @@ class Grid:
         Creates a grid of glist.
         """
         pass
+
+class Menu:
+    special_characters = {"f.1":"╔","f.l":"╗","l.1":"╚","l.l":"╝","f.s":"╠","l.s":"╣","m.m":"╬",
+                                 "f.m":"╦","l.m":"╩","fl":"║","fc":"═"}
+    def __init__(self, title, options, width = 60, columns_number = 1):
+        self.__title = title
+        self.__options = options
+        self.__width = width
+        self.__invalid_choise = False
+        self.__columns_number = columns_number
+        self.__menu = []
+    
+    def __draw_header(self):
+        dstr = Menu.special_characters["f.1"]+ Menu.special_characters["fc"] * (self.__width - 2) + Menu.special_characters["f.l"]
+        self.__menu.append(dstr)
+        # Here, the code should be developed by taking the title as an array and considering the possibility of having more lines.
+        for line in self.__title:
+            dstr = Menu.special_characters["fl"] + line.upper().center(self.__width - 2, " ") + Menu.special_characters["fl"]
+            self.__menu.append(dstr)
+        columns_width = int((self.__width - 2 - self.__columns_number) / self.__columns_number)
+        dstr = Menu.special_characters["f.s"]
+        for i in range(self.__columns_number):
+            dstr += Menu.special_characters["fc"] * columns_width
+            if i != self.__columns_number - 1:
+                dstr += Menu.special_characters["f.m"]
+            else:
+                dstr += Menu.special_characters["fc"] * ((self.__width - 2 - self.__columns_number) % self.__columns_number)+Menu.special_characters["l.s"]
+            menu.__menu.append(dstr)
+
+    def __draw_menu():
         
+        pass
+
+    def show(self):
+        # os.system("cls" if os.name == "nt" else "clear")
+        # print(f"\n{self.title}")
+        # for key, value in self.options.items():
+        #     print(f"{key}. {value['label']}")
+        # print("Q. Quit")
+        # if self.invalid_choise :
+        #     print("Incorrect choice. Please try again.")
+        # choice = input("Enter your choice: ").strip().lower()
+        # if choice.lower() in ["q","e","quit","exit"]:
+        #     input("Press Enter to exit...")
+        # elif choice in self.options:
+        #     self.options[choice]["action"]()
+        # else:
+        #     self.invalid_choise = True
+        #     self.show()
+        pass
