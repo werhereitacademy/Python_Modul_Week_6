@@ -21,7 +21,7 @@ class Task(ABC):
     
 class PersonalTask (Task):
 
-    def __init__(self, task_id, task_name, deadline):
+    def __init__(self, task_id, task_name, deadline,):
         super().__init__(task_id, task_name, deadline, priority="Low", color="Blue")
     def color_your_task(self):
         return f"The task {self.task_name} is colored in Blue."
