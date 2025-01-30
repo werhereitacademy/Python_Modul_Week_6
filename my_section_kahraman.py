@@ -61,7 +61,7 @@ class Task(ABC):
     
     def get_task_dict(self):
         return {
-            "task ID": self.__task_id,
+            "Task ID": self.__task_id,
             "Task name": self.__name,
             "Startdate": self.__startdate,
             "Deadline": self.__deadline,
@@ -70,7 +70,7 @@ class Task(ABC):
             "Color": self.__color
         }
     
-    @abstractmethod
+  
     def display_task(self):
         for i,j in self.get_task_dict().items():
             print(f"{i}: {j}")
@@ -87,4 +87,6 @@ class Task(ABC):
         else:
             return (self.__deadline - datetime.now().date()).days
         
-        
+    @abstractmethod
+    def color_your_task(self):
+        pass  
