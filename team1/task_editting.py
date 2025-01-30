@@ -1,5 +1,5 @@
 
-
+from task_management import*
 from datetime import datetime,date
 import json
 
@@ -20,8 +20,11 @@ def file_save(data):
 
 class TaskEditing():
     def __init__(self):
-        self.task_list = file_upload()t
+        self.task_list = file_upload()
         self.status_map={1:"beklemede",2:"devam ediyor",3:"tamamlandi"}
+
+        self.task_list.append(task_dict)
+        file_save(self.task_list)    
 
     def set_task_status(self,task_id,status):#durum degistirme
         if status not in self.status_map:
@@ -41,16 +44,15 @@ class TaskEditing():
     
     def set_task_priority(self,task_id,priority):#oncelik degistirme
         oncelik_degerleri={
-            1:"dusuk",
-            2:"orta",
-            3:"yuksek"
+            "High","Low"
+            
         }
         
         if priority not in oncelik_degerleri:
-            print("Gecersiz oncelik degeri! Lutfen 1, 2 veya 3 giriniz.")
+            print("Gecersiz oncelik degeri! Lutfen High veya Low giriniz.")
             return
 
-        for task in self.taskmanagement.task_list:
+        for task in self.task_list:
             if task["task_id"] == task_id:
                 task["priority"] = oncelik_degerleri[priority]
                 print(f"Gorev onceligi basari ile degistirildi. Yeni oncelik: {oncelik_degerleri[priority]}")
@@ -60,6 +62,7 @@ class TaskEditing():
 
         self.task_list.append(task_dict)
         file_save(self.task_list)
+
     def set_task_deadline(self,task_id,deadline):#deadline degistirme
         today = date.today()
         try:
@@ -70,7 +73,7 @@ class TaskEditing():
                 print("Gecersiz deadline! Lutfen bugunden sonraki bir tarih giriniz.")
                 return
 
-            for task in self.taskmanagement.task_list:
+            for task in self.task_list:
                 if task["task_id"] == task_id:
                     task["deadline"] = new_deadline_date
                     print(f"Gorev deadline basari ile degistirildi. Yeni deadline: {new_deadline_date}")
@@ -78,8 +81,13 @@ class TaskEditing():
 
             print("Gorev bulunamadi!")
 
+
+
         except ValueError:
-            print("Gecersiz deadline! Lutfen YYYY-AA-GG formatinda bir tarih giriniz.")        
+            print("Gecersiz deadline! Lutfen YYYY-AA-GG formatinda bir tarih giriniz.")
+
+        self.task_list.append(task_dict)
+        file_save(self.task_list)            
 
             
         
@@ -91,5 +99,7 @@ class TaskEditing():
                 self.taskmanagement.task_list.remove(task)
                 print("Gorev basari ile silindi.")
                 return
-        print("Gorev bulunamadi!")        
+        print("Gorev bulunamadi!")   
 
+        self.task_list.append(task_dict)
+        file_save(self.task_list)
