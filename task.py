@@ -223,58 +223,55 @@ class Chief:
         self.task_management = TaskManagement()
         self.task_editing = TaskEditing(self.task_management)
         self.task_tracking = TaskTracking(self.task_management)
+        self.menu = []
         self.menu.append(["╔═══════════════════════════════════════════════════════════╗ ",
-                          "║             WELCOME TO TASK MANAGEMENT SYSTEM             ║ ",
-                          "╠═══════════════════════════════════════════════════════════╣ ",
-                          "║                                                           ║ ",
-                          "║                (1) Add Task                               ║ ",
-                          "║                (2) Update Task                            ║ ",
-                          "║                (3) Track Task                             ║ ",
-                          "║                (4) Search Task                            ║ ",
-                          "║                (5) Delete a Task                          ║ ",
-                          "║                                                           ║ ",
-                          "╠═══════════════════════════════════════════════════════════╣ ",
-                          "║                    (Q) Quit / Exit                        ║ ",
-                          "╚═══════════════════════════════════════════════════════════╝ "
-                          ])
+        "║             WELCOME TO TASK MANAGEMENT SYSTEM             ║ ",
+        "╠═══════════════════════════════════════════════════════════╣ ",
+        "║                                                           ║ ",
+        "║                (1) Add Task                               ║ ",
+        "║                (2) Update Task                            ║ ",
+        "║                (3) Track Task                             ║ ",
+        "║                (4) Search Task                            ║ ",
+        "║                (5) Delete a Task                          ║ ",
+        "║                                                           ║ ",
+        "╠═══════════════════════════════════════════════════════════╣ ",
+        "║                    (Q) Quit / Exit                        ║ ",
+        "╚═══════════════════════════════════════════════════════════╝ "])
         self.menu.append(["╔═══════════════════════════════════════════════════════════╗ ",
-                          "║             WELCOME TO TASK MANAGEMENT SYSTEM             ║ ",
-                          "╠═══════════════════════════════════════════════════════════╣ ",
-                          "║                                                           ║ ",
-                          "║                (1) Add Personal Task                      ║ ",
-                          "║                (2) Add Work Task                          ║ ",
-                          "║                (3) Add Study Task                         ║ ",
-                          "║                (4) Add Social Task                        ║ ",
-                          "║                                                           ║ ",
-                          "╠═══════════════════════════════════════════════════════════╣ ",
-                          "║                  (Q) Quit Add Task Menu                   ║ ",
-                          "╚═══════════════════════════════════════════════════════════╝ "
-                          ])
+        "║             WELCOME TO TASK MANAGEMENT SYSTEM             ║ ",
+        "╠═══════════════════════════════════════════════════════════╣ ",
+        "║                                                           ║ ",
+        "║                (1) Add Personal Task                      ║ ",
+        "║                (2) Add Work Task                          ║ ",
+        "║                (3) Add Study Task                         ║ ",
+        "║                (4) Add Social Task                        ║ ",
+        "║                                                           ║ ",
+        "╠═══════════════════════════════════════════════════════════╣ ",
+        "║                  (Q) Quit Add Task Menu                   ║ ",
+        "╚═══════════════════════════════════════════════════════════╝ "])
         self.menu.append(["╔═══════════════════════════════════════════════════════════╗ ",
-                          "║             WELCOME TO TASK MANAGEMENT SYSTEM             ║ ",
-                          "╠═══════════════════════════════════════════════════════════╣ ",
-                          "║                                                           ║ ",
-                          "║                (1) Update Status                          ║ ",
-                          "║                (2) Update Priority                        ║ ",
-                          "║                (3) Update Deadline                        ║ ",
-                          "║                (4) Task Completed                         ║ ",
-                          "║                                                           ║ ",
-                          "╠═══════════════════════════════════════════════════════════╣ ",
-                          "║                (Q) Quit Update Task Menu                  ║ ",
-                          "╚═══════════════════════════════════════════════════════════╝ "
-                          ])
+        "║             WELCOME TO TASK MANAGEMENT SYSTEM             ║ ",
+        "╠═══════════════════════════════════════════════════════════╣ ",
+        "║                                                           ║ ",
+        "║                (1) Update Status                          ║ ",
+        "║                (2) Update Priority                        ║ ",
+        "║                (3) Update Deadline                        ║ ",
+        "║                (4) Task Completed                         ║ ",
+        "║                                                           ║ ",
+        "╠═══════════════════════════════════════════════════════════╣ ",
+        "║                (Q) Quit Update Task Menu                  ║ ",
+        "╚═══════════════════════════════════════════════════════════╝ "])
         self.menu.append(["╔═══════════════════════════════════════════════════════════╗ ",
-                          "║             WELCOME TO TASK MANAGEMENT SYSTEM             ║ ",
-                          "╠═══════════════════════════════════════════════════════════╣ ",
-                          "║                                                           ║ ",
-                          "║                (1) Show Task Status                       ║ ",
-                          "║                (2) Show Task Deadline                     ║ ",
-                          "║                (3) Show Task Color                        ║ ",
-                          "║                                                           ║ ",
-                          "╠═══════════════════════════════════════════════════════════╣ ",
-                          "║                (Q) Quit Update Task Menu                  ║ ",
-                          "╚═══════════════════════════════════════════════════════════╝ "
-                          ])
+        "║             WELCOME TO TASK MANAGEMENT SYSTEM             ║ ",
+        "╠═══════════════════════════════════════════════════════════╣ ",
+        "║                                                           ║ ",
+        "║                (1) Show Task Status                       ║ ",
+        "║                (2) Show Task Deadline                     ║ ",
+        "║                (3) Show Task Color                        ║ ",
+        "║                                                           ║ ",
+        "╠═══════════════════════════════════════════════════════════╣ ",
+        "║                (Q) Quit Update Task Menu                  ║ ",
+        "╚═══════════════════════════════════════════════════════════╝ "])
         
 
 
@@ -329,9 +326,6 @@ class Chief:
         except Exception as e:
             print("Error:", e)
             input("Press Enter to continue...")
-
-    def add_task(self):
-        pass
     
     def edit_task(self):
         try:
@@ -358,25 +352,78 @@ class Chief:
             task_tracking.get_task_status(task_id)
             task_tracking.get_task_prioritization(task_id)
             task_tracking.get_task_date(task_id)
+    def delete_task(self):
+        try:
+            task_id = int(input("Enter Task ID to delete: "))
+            self.task_management.delete_task(task_id)
+            print("Task deleted successfully!")
+            input("Press Enter to continue...")
+        except Exception as e:
+            print("Error:", e)
+            input("Press Enter to continue...")
     def exit_program(self):
         print("Exiting the program...")
         input("Press Enter to continue...")
 
     def display_menu(self, menu=0, invalid_choice=False):
-        os.system("cls" if os.name == "nt" else "clear")
-        for line in self.menu[0]:
-            print(line)
-        if invalid_choice:
-            print("Invalid choice. Please try again.")
-        return input("Please choose an option: ")
+        try:
+            os.system("cls" if os.name == "nt" else "clear")
+            for line in self.menu[menu]:
+                print(line)
+            if invalid_choice:
+                print("Invalid choice. Please try again.")
+            return input("Please choose an option: ")
+        except Exception as e:
+            print("Error:", e)
+            input("Press Enter to continue...")
+            return "Q"
     def task_add_menu(self, refunction = False):
-        choise = self.display_menu(self, menu=1, invalid_choice=refunction):
+        choise = self.display_menu(self, menu=1, invalid_choice=refunction)
         if choise.lower() in ["e", "q", "quit", "exit"]:
             self.main()
         elif choise == "1":
-            
+            try:
+                self.create_personel_task()
+            except Exception as e:
+                print("Error:", e)
+                input("Press Enter to continue...")
+                self.task_add_menu()
+            finally:
+                self.task_add_menu()
+        elif choise == "2":
+            try:
+                self.create_work_task()
+            except Exception as e:
+                print("Error:", e)
+                input("Press Enter to continue...")
+            finally:
+                self.task_add_menu()
         elif choise == "3":
-            self.create_exam_task()
+            try:
+                self.create_study_task()
+            except Exception as e:
+                print("Error:", e)
+                input("Press Enter to continue...")
+            finally:
+                self.task_add_menu()
+        elif choise == "4":
+            try:
+                self.create_social_task()
+            except Exception as e:
+                print("Error:", e)
+                input("Press Enter to continue...")
+            finally:
+                    self.task_add_menu()
+        else:
+            self.task_add_menu(refunction=True)
+    def display_grid(tasks, fields, sizes, title):
+        try:
+            grid = drawing.create_grid(tasks, fields,sizes,title)
+            for i in grid:
+                print(i)
+        except Exception as e:
+            print("Grid not Show, Error:", e)
+            input("Press Enter to continue...")
     def main(self, refunction = False):
         choise = self.display_menu()
         if choise.lower() in ["e", "q", "quit", "exit"]:
@@ -384,10 +431,22 @@ class Chief:
             input("Press Enter to continue...")
             self.create_personel_task()
         elif choise == "1":
-            
+            self.task_add_menu()
+            self.display_menu()
+        elif choise == "2":
+            self.display_grid(self.task_management.get_tasks(), self.task_management.get_fields(),[8, 15, 19, 19, 10, 10, 10],"Task List")
+            self.edit_task()
+            self.display_menu()
         elif choise == "3":
-            self.create_exam_task()
-
+            self.display_grid(self.task_management.get_tasks(), self.task_management.get_fields(),[8, 15, 19, 19, 10, 10, 10],"Task List")
+            self.track()
+            self.display_menu()
+        elif choise == "4":
+            self.display_grid(self.task_management.get_tasks(), self.task_management.get_fields(),[8, 15, 19, 19, 10, 10, 10],"Task List")
+            self.delete_task()
+            self.display_menu()
+        else:
+            self.display_menu(invalid_choice=True)
 
 """------------------------------------------------------------"""
 
