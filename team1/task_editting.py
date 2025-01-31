@@ -22,7 +22,7 @@ def file_save(data):
 class TaskEditing():
     def __init__(self):
         self.task_list = file_upload()
-        self.status_map={1:"beklemede",2:"devam ediyor",3:"tamamlandi"}
+        self.status_map={1:"Pending",2:"In progress",3:"Completed"}
 
     def set_task_status(self,task_id,status):#durum degistirme
         if status not in self.status_map:
@@ -41,6 +41,7 @@ class TaskEditing():
     
     def set_task_priority(self,task_id,priority):#oncelik degistirme
         oncelik_degerleri={"High" : "High","Low": "Low"}
+        renk_degerleri = {"High": "Red", "Low": "Blue"}
         
         if priority not in oncelik_degerleri:
             print("Gecersiz oncelik degeri! Lutfen High veya Low giriniz.")
@@ -49,37 +50,35 @@ class TaskEditing():
         for task in self.task_list:
             if task["task_id"] == task_id:
                 task["priority"] = oncelik_degerleri[priority]
-                print(f"Gorev onceligi basari ile degistirildi. Yeni oncelik: {oncelik_degerleri[priority]}")
+                task["color"] = renk_degerleri[priority]
+                print(f"Gorev onceligi basari ile degistirildi. Yeni oncelik: {oncelik_degerleri[priority]} . Ayrica gorev rengi de{renk_degerleri[priority]} olarak degisti ")
                 file_save(self.task_list)
                 return 
 
         print("Gorev bulunamadi!")
 
 
-    def set_task_deadline(self,task_id,deadline):#deadline degistirme
+    def set_task_deadline(self, task_id, deadline):  # Deadline değiştirme
         today = date.today()
         try:
             new_deadline_date = datetime.strptime(deadline, "%Y-%m-%d").date()
-           
-
+    
             if new_deadline_date < today:
                 print("Gecersiz deadline! Lutfen bugunden sonraki bir tarih giriniz.")
                 return
-
+    
             for task in self.task_list:
                 if task["task_id"] == task_id:
-                    task["deadline"] = new_deadline_date
-                    print(f"Gorev deadline basari ile degistirildi. Yeni deadline: {new_deadline_date}")
-                    file_save(self.task_list)  
+                    task["deadline"] = new_deadline_date.strftime("%Y-%m-%d")  # ✅ Date objesini string'e çeviriyoruz
+                    print(f"Gorev deadline basari ile degistirildi. Yeni deadline: {new_deadline_date.strftime('%Y-%m-%d')}")
+                    file_save(self.task_list)
                     return
-
+    
             print("Gorev bulunamadi!")
-
-
-
+    
         except ValueError:
             print("Gecersiz deadline! Lutfen YYYY-AA-GG formatinda bir tarih giriniz.")
-
+    
     def remove_task(self,task_id):#task silme
         for task in self.task_list:
             if task["task_id"] == task_id:

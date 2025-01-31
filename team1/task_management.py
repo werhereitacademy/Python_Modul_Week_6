@@ -1,8 +1,9 @@
 from task import PersonalTask, WorkTask
 from datetime import datetime
 import json
+import os
 
-task_json = "tasks.json"
+task_json = os.path.join(os.path.dirname(__file__), "tasks.json")
 
 def file_upload():
     try:
@@ -59,11 +60,11 @@ class TaskManagement:
             for task in self.task_list:
                 print(f'ID: {task["task_id"]} - {task["task_name"]} - Durum: {task["status"]} - Öncelik: {task["priority"]} - Renk: {task["color"]}')
 
-gorevYonetimi = TaskManagement()
-print("\nYeni bir görev ekleyin:")
-task_type = input("Görev Türü (Personal/Work): ").strip()
-task_name = input("Görev İsmi: ").strip()
-deadline = input("Son Tarih (YYYY-MM-DD): ").strip()
 
-gorevYonetimi.add_task(task_type, task_name, deadline)
-gorevYonetimi.display_tasks()
+# print("\nYeni bir görev ekleyin:")
+# task_type = input("Görev Türü (Personal/Work): ").strip()
+# task_name = input("Görev İsmi: ").strip()
+# deadline = input("Son Tarih (YYYY-MM-DD): ").strip()
+# 
+# gorevYonetimi.add_task(task_type, task_name, deadline)
+# gorevYonetimi.display_tasks()

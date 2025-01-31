@@ -20,27 +20,35 @@ def file_save(data):
 
 class TaskTracking:
     
-    def __init__(self, task_management):
-        self.task_file=file_upload()
-        
+    def __init__(self):
+        self.task_list = file_upload()
 
     def get_task_status(self, task_id):
-        task = next((t for t in self.task_management.task_list if t.task_id == task_id), None)
+        task = next((t for t in self.task_list if t["task_id"] == task_id), None)  # task_id'yi kullanmalıyız
         if task:
-            task.status
-            file_save(self.task_list)
-            return 
+            return task["status"]  # Durum değerini döndür
+        else:
+            print(f"Görev ID {task_id} bulunamadı!")
+            return None
 
     def get_task_deadline(self, task_id):
-        task = next((t for t in self.task_management.task_list if t.task_id == task_id), None)
+        task = next((t for t in self.task_list if t["task_id"] == task_id), None)  # task_id'yi kullanmalıyız
         if task:
-            task.deadline
-            file_save(self.task_list)
-            return 
+            return task["deadline"]  # Deadline değerini döndür
+        else:
+            print(f"Görev ID {task_id} bulunamadı!")
+            return None
 
     def get_task_color(self, task_id):
-        task = next((t for t in self.task_management.task_list if t.task_id == task_id), None)
-        if task:
-            task.color
-            file_save(self.task_list)
-            return 
+        task = None  # Başlangıçta görev bulunmadı olarak ayarla
+
+        for t in self.task_list:  # Listeyi sırayla gez
+            if t["task_id"] == task_id:  # Eğer task_id eşleşiyorsa
+                task = t  # Görevi bul ve task değişkenine ata
+                break  # Döngüyü sonlandır
+          
+        if task is not None:# Eğer task bulunmazsa, task değişkeni None olur
+            return task["color"]  # Color değerini döndür
+        else:
+            print(f"Görev ID {task_id} bulunamadı!")
+            return None

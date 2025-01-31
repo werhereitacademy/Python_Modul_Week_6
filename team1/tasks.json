@@ -1,33 +1,25 @@
 [
   {
     "task_id": 1,
-    "task_name": "Dis Randevusu",
+    "task_name": "Misair",
     "deadline": "2025-02-03",
     "status": "Pending",
-    "priority": "Low",
+    "priority": "High",
     "color": "Blue"
   },
   {
     "task_id": 2,
     "task_name": "Odev",
-    "deadline": "2025-02-02",
+    "deadline": "2025-02-03",
     "status": "Pending",
     "priority": "High",
     "color": "Red"
   },
   {
     "task_id": 3,
-    "task_name": "kitap",
-    "deadline": "2025-02-20",
-    "status": "Pending",
-    "priority": "High",
-    "color": "Red"
-  },
-  {
-    "task_id": 4,
-    "task_name": "Kitap",
-    "deadline": "2025-05-05",
-    "status": "Pending",
+    "task_name": "Randevu",
+    "deadline": "2025-02-11",
+    "status": "In progress",
     "priority": "High",
     "color": "Red"
   }
