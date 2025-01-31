@@ -88,6 +88,7 @@ class Grid:
         Creates a grid of glist.
         """
         pass
+print("------------------------------------")
 
 class Menu:
     special_characters = {"f.1":"╔","f.l":"╗","l.1":"╚","l.l":"╝","f.s":"╠","l.s":"╣","m.m":"╬",
@@ -96,45 +97,68 @@ class Menu:
         self.__title = title
         self.__options = options
         self.__width = width
-        self.__invalid_choise = False
         self.__columns_number = columns_number
         self.__menu = []
+        self.__draw_header()
+        self.__draw_choices()
+        self.__draw_footer()
+        self.invalid_choise = False
     
     def __draw_header(self):
         dstr = Menu.special_characters["f.1"]+ Menu.special_characters["fc"] * (self.__width - 2) + Menu.special_characters["f.l"]
         self.__menu.append(dstr)
         # Here, the code should be developed by taking the title as an array and considering the possibility of having more lines.
+        # Doing this
         for line in self.__title:
             dstr = Menu.special_characters["fl"] + line.upper().center(self.__width - 2, " ") + Menu.special_characters["fl"]
             self.__menu.append(dstr)
+
         columns_width = int((self.__width - 2 - self.__columns_number) / self.__columns_number)
         dstr = Menu.special_characters["f.s"]
+        estr = Menu.special_characters["f.s"]
         for i in range(self.__columns_number):
             dstr += Menu.special_characters["fc"] * columns_width
+            estr += Menu.special_characters["fc"] * columns_width 
             if i != self.__columns_number - 1:
                 dstr += Menu.special_characters["f.m"]
+                estr += Menu.special_characters["m.m"]
             else:
-                dstr += Menu.special_characters["fc"] * ((self.__width - 2 - self.__columns_number) % self.__columns_number)+Menu.special_characters["l.s"]
-            menu.__menu.append(dstr)
+                dstr += Menu.special_characters["fc"] * ((self.__width - 2 - self.__columns_number) % self.__columns_number)+ Menu.special_characters["l.s"]
+                estr += Menu.special_characters["fc"] * ((self.__width - 2 - self.__columns_number) % self.__columns_number)+ Menu.special_characters["l.s"]
+        self.__menu.append(dstr)
+        self.__menu.append(estr)
 
-    def __draw_menu():
+    def __draw_choices(self):
+        # Here, the code should be developed by taking the title as an array and considering the possibility of having more lines.
+        for key, value in self.__options.items():
+            dstr = Menu.special_characters["fl"] +" "* 16+ key + (" " * (5-len(key))) + value + " " * (self.__width -23 - len(value)) + Menu.special_characters["fl"]
+            self.__menu.append(dstr)
+
+    def __draw_footer(self):
+        dstr = Menu.special_characters["f.s"]+ Menu.special_characters["fc"] * (self.__width - 2) + Menu.special_characters["l.s"]
+        self.__menu.append(dstr)
+        dstr = Menu.special_characters["fl"] +"(Q) Quit / Exit (E)".center(self.__width-2," ")+ Menu.special_characters["fl"]
+        self.__menu.append(dstr)
+        dstr = Menu.special_characters["l.1"]+ Menu.special_characters["fc"] * (self.__width - 2) + Menu.special_characters["l.l"]
+        self.__menu.append(dstr)
+    def get_menu(self):
+        return self.__menu
+
+    def draw(self):
+        for line in self.__menu:
+            print(line)
         
-        pass
-
-    def show(self):
-        # os.system("cls" if os.name == "nt" else "clear")
-        # print(f"\n{self.title}")
-        # for key, value in self.options.items():
-        #     print(f"{key}. {value['label']}")
-        # print("Q. Quit")
-        # if self.invalid_choise :
-        #     print("Incorrect choice. Please try again.")
-        # choice = input("Enter your choice: ").strip().lower()
-        # if choice.lower() in ["q","e","quit","exit"]:
-        #     input("Press Enter to exit...")
-        # elif choice in self.options:
-        #     self.options[choice]["action"]()
-        # else:
-        #     self.invalid_choise = True
-        #     self.show()
-        pass
+    def menu_run(self):
+        os.system("cls" if os.name == "nt" else "clear")
+        self.draw()
+        if self.invalid_choise :
+            print("Incorrect choice. Please try again.")
+            self.invalid_choise = False
+        choice = input("Enter your choice: ").strip().lower()
+        if choice.lower() in ["q","e","quit","exit"]:
+            input("Press Enter to exit...")
+        elif choice in self.options:
+            self.options[choice]["action"]()
+        else:
+            self.invalid_choise = True
+            self.menu_run()

@@ -32,7 +32,7 @@ class Task(ABC):
         elif isinstance(deadline, datetime):
             return deadline
         else:
-            raise ValueError("Invalid deadline format")
+            raise Exception("Invalid deadline format")
 
     def set_task_id(self, task_id):
         self.__task_id = task_id
@@ -121,15 +121,26 @@ class WorkTask(Task):
         self.set_color("Red")
 
 """------------------------------------------------------------"""
-# ExamTask class for tasks related to work
-class ExamTask(Task):
+# StudyTask class for tasks related to work
+class StudyTask(Task):
     def __init__(self, task_id, name, deadline):
         super().__init__(task_id, name, deadline)
         self.set_priority("Very High")
         self.color_your_task()
 
     def color_your_task(self):
+        self.set_color("Bordo")
+"""------------------------------------------------------------"""
+# SocialTask class for tasks related to social
+class StudyTask(Task):
+    def __init__(self, task_id, name, deadline):
+        super().__init__(task_id, name, deadline)
+        self.set_priority("medium")
+        self.color_your_task()
+
+    def color_your_task(self):
         self.set_color("Green")
+
 
 """------------------------------------------------------------"""   
 class TaskManagement:
@@ -168,17 +179,17 @@ class TaskEditing:
     def set_task_status(self, task_id, status):
         task = self.task_management.get_task_by_id(task_id)
         if task:
-            task.status = status
+            task.set_status(status)
 
     def set_prioritization(self, task_id, priority):
         task = self.task_management.get_task_by_id(task_id)
         if task:
-            task.priority = priority
+            task.set_priority(priority)
 
     def set_new_date(self, task_id, deadline):
         task = self.task_management.get_task_by_id(task_id)
         if task:
-            task.deadline = task.parse_deadline(deadline)
+            task.set_deadline(deadline)
 
     def mark_status_completed(self, task_id):
         task = self.task_management.get_task_by_id(task_id)
@@ -204,9 +215,7 @@ class TaskTracking:
     def get_task_color(self, task_id):
         task = self.task_management.get_task_by_id(task_id)
         return task.color if task else None
-    
 """------------------------------------------------------------"""
-
 
 """------------------------------------------------------------"""
 class Chief:
@@ -214,15 +223,60 @@ class Chief:
         self.task_management = TaskManagement()
         self.task_editing = TaskEditing(self.task_management)
         self.task_tracking = TaskTracking(self.task_management)
-        self.main_menu = create_menu()
-    def create_menu(self):
-        return drawing.Menu(["Task Management System"], {
-            "1": {"label": "Add Task", "action": self.add_task},
-            "2": {"label": "Display Tasks", "action": self.task_management.display_tasks},
-            "3": {"label": "Edit Task", "action": self.edit_task},
-            "4": {"label": "Track Task", "action": self.track},
-            "Q": {"label": "Quit / Exit E", "action": self.exit_program}
-        })
+        self.menu.append(["╔═══════════════════════════════════════════════════════════╗ ",
+                          "║             WELCOME TO TASK MANAGEMENT SYSTEM             ║ ",
+                          "╠═══════════════════════════════════════════════════════════╣ ",
+                          "║                                                           ║ ",
+                          "║                (1) Add Task                               ║ ",
+                          "║                (2) Update Task                            ║ ",
+                          "║                (3) Track Task                             ║ ",
+                          "║                (4) Search Task                            ║ ",
+                          "║                (5) Delete a Task                          ║ ",
+                          "║                                                           ║ ",
+                          "╠═══════════════════════════════════════════════════════════╣ ",
+                          "║                    (Q) Quit / Exit                        ║ ",
+                          "╚═══════════════════════════════════════════════════════════╝ "
+                          ])
+        self.menu.append(["╔═══════════════════════════════════════════════════════════╗ ",
+                          "║             WELCOME TO TASK MANAGEMENT SYSTEM             ║ ",
+                          "╠═══════════════════════════════════════════════════════════╣ ",
+                          "║                                                           ║ ",
+                          "║                (1) Add Personal Task                      ║ ",
+                          "║                (2) Add Work Task                          ║ ",
+                          "║                (3) Add Study Task                         ║ ",
+                          "║                (4) Add Social Task                        ║ ",
+                          "║                                                           ║ ",
+                          "╠═══════════════════════════════════════════════════════════╣ ",
+                          "║                  (Q) Quit Add Task Menu                   ║ ",
+                          "╚═══════════════════════════════════════════════════════════╝ "
+                          ])
+        self.menu.append(["╔═══════════════════════════════════════════════════════════╗ ",
+                          "║             WELCOME TO TASK MANAGEMENT SYSTEM             ║ ",
+                          "╠═══════════════════════════════════════════════════════════╣ ",
+                          "║                                                           ║ ",
+                          "║                (1) Update Status                          ║ ",
+                          "║                (2) Update Priority                        ║ ",
+                          "║                (3) Update Deadline                        ║ ",
+                          "║                (4) Task Completed                         ║ ",
+                          "║                                                           ║ ",
+                          "╠═══════════════════════════════════════════════════════════╣ ",
+                          "║                (Q) Quit Update Task Menu                  ║ ",
+                          "╚═══════════════════════════════════════════════════════════╝ "
+                          ])
+        self.menu.append(["╔═══════════════════════════════════════════════════════════╗ ",
+                          "║             WELCOME TO TASK MANAGEMENT SYSTEM             ║ ",
+                          "╠═══════════════════════════════════════════════════════════╣ ",
+                          "║                                                           ║ ",
+                          "║                (1) Show Task Status                       ║ ",
+                          "║                (2) Show Task Deadline                     ║ ",
+                          "║                (3) Show Task Color                        ║ ",
+                          "║                                                           ║ ",
+                          "╠═══════════════════════════════════════════════════════════╣ ",
+                          "║                (Q) Quit Update Task Menu                  ║ ",
+                          "╚═══════════════════════════════════════════════════════════╝ "
+                          ])
+        
+
 
     def create_personel_task(self):
         try:
@@ -250,12 +304,25 @@ class Chief:
             print("Error:", e)
             input("Press Enter to continue...")
     
-    def create_exam_task(self):
+    def create_study_task(self):
         try:
             task_id = int(max(self.task_management.get_tasks(), key=lambda x: x["task_id"])["task_id"]) + 1
             task_name = input("Enter Task Name: ")
             deadline = input("Enter Deadline (e.g., today, tomorrow, next week, or YYYY-MM-DD): ")
-            task = ExamTask(task_id, task_name, deadline)
+            task = StudyTask(task_id, task_name, deadline)
+            self.task_management.add_task(task)
+            print("Task added successfully!")
+            input("Press Enter to continue...")
+        except Exception as e:
+            print("Error:", e)
+            input("Press Enter to continue...")
+    
+    def create_social_task(self):
+        try:
+            task_id = int(max(self.task_management.get_tasks(), key=lambda x: x["task_id"])["task_id"]) + 1
+            task_name = input("Enter Task Name: ")
+            deadline = input("Enter Deadline (e.g., today, tomorrow, next week, or YYYY-MM-DD): ")
+            task = SocialTask(task_id, task_name, deadline)
             self.task_management.add_task(task)
             print("Task added successfully!")
             input("Press Enter to continue...")
@@ -264,50 +331,76 @@ class Chief:
             input("Press Enter to continue...")
 
     def add_task(self):
-        task_id = int(max(self.task_management.get_tasks(), key=lambda x: x["task_id"])["task_id"]) + 1
-        task_name = input("Enter Task Name: ")
-        deadline = input("Enter Deadline (e.g., today, tomorrow, next week, or YYYY-MM-DD): ")
-        task_type = input("Enter Task Type (Work/Exam/Pesonel): ").lower()
-        if task_type == "exam":
-            task = ExamTask(task_id, task_name, deadline)
-        elif task_type == "work":
-            task = WorkTask(task_id, task_name, deadline)
-        else:
-            PersonelTask(task_id, task_name, deadline)
-        self.task_management.add_task(task)
-        print("Task added successfully!")
-        input("Press Enter to continue...")
+        pass
     
     def edit_task(self):
-        task_id = int(input("Enter Task ID to edit: "))
+        try:
+            task_id = int(input("Enter Task ID to edit: "))
+            task = self.task_management.get_task_by_id(task_id)
+            if task:
+                task_editing = TaskEditing(self.task_management)
+                task_editing.set_task_status(task_id, input("Enter New Status: "))
+                task_editing.set_prioritization(task_id, input("Enter New Priority: "))
+                task_editing.set_new_date(task_id, input("Enter New Deadline: "))
+                print("Task edited successfully!")
+            else:
+                print("Task not found.")
+            input("Press Enter to continue...")
+        except Exception as e:
+            print("Error:", e)
+            input("Press Enter to continue...")
+
+    def track(self):
+        task_id = int(input("Enter Task ID to track: "))
         task = self.task_management.get_task_by_id(task_id)
         if task:
-            task_editing = TaskEditing(self.task_management)
-            task_editing.set_task_status(task_id, input("Enter New Status: "))
-            task_editing.set_prioritization(task_id, input("Enter New Priority: "))
-            task_editing.set_new_date(task_id, input("Enter New Deadline: "))
-            print("Task edited successfully!")
-        else:
-            print("Task not found.")
+            task_tracking = TaskTracking(self.task_management)
+            task_tracking.get_task_status(task_id)
+            task_tracking.get_task_prioritization(task_id)
+            task_tracking.get_task_date(task_id)
+    def exit_program(self):
+        print("Exiting the program...")
         input("Press Enter to continue...")
 
-
-    def main(self):
-        self.main_menu.show()
+    def display_menu(self, menu=0, invalid_choice=False):
+        os.system("cls" if os.name == "nt" else "clear")
+        for line in self.menu[0]:
+            print(line)
+        if invalid_choice:
+            print("Invalid choice. Please try again.")
+        return input("Please choose an option: ")
+    def task_add_menu(self, refunction = False):
+        choise = self.display_menu(self, menu=1, invalid_choice=refunction):
+        if choise.lower() in ["e", "q", "quit", "exit"]:
+            self.main()
+        elif choise == "1":
+            
+        elif choise == "3":
+            self.create_exam_task()
+    def main(self, refunction = False):
+        choise = self.display_menu()
+        if choise.lower() in ["e", "q", "quit", "exit"]:
+            print("Exiting the program...")
+            input("Press Enter to continue...")
+            self.create_personel_task()
+        elif choise == "1":
+            
+        elif choise == "3":
+            self.create_exam_task()
 
 
 """------------------------------------------------------------"""
 
 if __name__ == "__main__":
-    task_manager = TaskManagement()
-    task_manager.add_task(PersonelTask(1, "Task 1", datetime(2025, 2, 15)))
-    task_manager.add_task(WorkTask(2, "Task 2", datetime(2025, 3, 15)))
-    task_manager.add_task(ExamTask(3,"Task 3","Next Week"))
-    task_manager.add_task(ExamTask(4,"Task 4",5))
-    grid = drawing.create_grid(task_manager.get_tasks(), task_manager.get_fields(),[8, 15, 19, 19, 10, 10, 10],"Task Management")
-    for i in grid:
-        print(i)
+    # task_manager = TaskManagement()
+    # task_manager.add_task(PersonelTask(1, "Task 1", datetime(2025, 2, 15)))
+    # task_manager.add_task(WorkTask(2, "Task 2", datetime(2025, 3, 15)))
+    # task_manager.add_task(ExamTask(3,"Task 3","Next Week"))
+    # task_manager.add_task(ExamTask(4,"Task 4",5))
+    # grid = drawing.create_grid(task_manager.get_tasks(), task_manager.get_fields(),[8, 15, 19, 19, 10, 10, 10],"Task Management")
+    # for i in grid:
+    #     print(i)
 
-    # chief = Chief()
-    # chief.main()
+    chief = Chief()
+    chief.main()
     
