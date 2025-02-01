@@ -413,7 +413,6 @@ class Chief:
                 print("╠═══════════════════════════════════════════════════════════╣")
                 print("║           (Q) Quit Search and Order Menu                  ║")
                 print("╚═══════════════════════════════════════════════════════════╝")
-                
                 if invalid_input:
                     print("Invalid input. Please try again.")
                     invalid_input = False
@@ -423,43 +422,43 @@ class Chief:
                 elif choice == "1":
                     search_task["Task Name"] = ["=",input("Enter Task Name: ")]
                 elif choice == "2":
-                    search_task["Task Status"] = ["=",input("Enter Task Status: ")]
+                    search_task["Status"] = ["=",input("Enter Task Status: ")]
                 elif choice == "3":
-                    search_task["Task Priority"] = ["=",input("Enter Task Priority: ")]
+                    search_task["Priority"] = ["=",input("Enter Task Priority: ")]
                 elif choice == "4":
                     search_task["Remaining Days"] = ["=",input("Enter Task Date: ")]
                 elif choice == "5":
-                    search_task["Task Color"] = ["=",input("Enter Task Color: ")]
+                    search_task["Color"] = ["=",input("Enter Task Color: ")]
                 elif choice == "11":
                     search_task["Task Name"] = ["In",input("Enter Task Name: ")]
                 elif choice == "12":
-                    search_task["Task Status"] = ["In",input("Enter Task Status: ")]
+                    search_task["Status"] = ["In",input("Enter Task Status: ")]
                 elif choice == "13":
-                    search_task["Task Priority"] = ["In",input("Enter Task Priority: ")]
+                    search_task["Priority"] = ["In",input("Enter Task Priority: ")]
                 elif choice == "14":
                     search_task["Remaining Days"] = ["less",input("Enter Task Date: ")]
                 elif choice == "15":
-                    search_task["Task Color"] = ["In",input("Enter Task Color: ")]
+                    search_task["Color"] = ["In",input("Enter Task Color: ")]
                 elif choice == "6":
                     order_field["Task Name"] = "Asc"
                 elif choice == "7":
-                    order_field["Task Status"] = "Asc"
+                    order_field["Status"] = "Asc"
                 elif choice == "8":
-                    order_field["Task Priority"] = "Asc"
+                    order_field["Priority"] = "Asc"
                 elif choice == "9":
                     order_field["Remaining Days"] = "Asc"
                 elif choice == "10":
-                    order_field["Task Color"] = "Asc"
+                    order_field["Color"] = "Asc"
                 elif choice == "16":
                     order_field["Task Name"] = "Desc"
                 elif choice == "17":
-                    order_field["Task Status"] = "Desc"
+                    order_field["Status"] = "Desc"
                 elif choice == "18":
-                        order_field["Task Priority"] = "Desc"
+                        order_field["Priority"] = "Desc"
                 elif choice == "19":
                     order_field["Remaining Days"] = "Desc"
                 elif choice == "20":
-                    order_field["Task Color"] = "Desc"
+                    order_field["Color"] = "Desc"
                 else:
                     invalid_input = True
             self.display_search_result(search_task, order_field)
@@ -591,7 +590,7 @@ class Chief:
                 except Exception as e:
                     print("Error:", e)
                     input("Press Enter to continue...")
-            elif choise == "5":
+            elif choise == "5": 
                 try:
                     self.search_order()
                 except Exception as e:
