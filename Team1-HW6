@@ -1,0 +1,323 @@
+#main.py
+from task_management_system.chief import Chief
+
+# Function to run the main program
+if __name__ == "__main__":
+    chief = Chief()  # Initialize the Chief class
+    chief.run()  # Start the main application with the Chief class's run method
+
+
+# task_management_system/__init__.py
+""" Task Management System package """
+
+
+# task_management_system/chief.py
+from task_management_system.task_management import TaskManagement  # TaskManagement class
+from task_management_system.task_editing import TaskEditing  # TaskEditing class
+from task_management_system.task_tracking import TaskTracking  # TaskTracking class
+from task_management_system.task import PersonalTask, WorkTask, StudyTask  # Task classes
+
+class Chief:
+    def __init__(self):
+        self.task_management = TaskManagement()
+        self.task_editing = TaskEditing(self.task_management)
+        self.task_tracking = TaskTracking(self.task_management)
+
+    def run(self):
+        while True:
+            print("\nTask Management System")
+            print("1. Add Task")
+            print("2. Display Tasks")
+            print("3. Sort Tasks")
+            print("4. Edit Task")
+            print("5. Add Notes to Task")  # Add Notes option added
+            print("6. Exit")
+            choice = input("Enter choice: ")
+            
+            if choice == "1":
+                task_type = input("Enter task type (personal/work/study): ").strip().lower()
+                task_name = input("Enter task name: ").strip()
+                deadline = input("Enter task deadline (YYYY-MM-DD): ").strip()
+                if task_type == "personal":
+                    task = PersonalTask(task_name, deadline)
+                elif task_type == "work":
+                    task = WorkTask(task_name, deadline)
+                elif task_type == "study":
+                    task = StudyTask(task_name, deadline)
+                else:
+                    print("Invalid task type.")
+                    continue
+                self.task_management.add_task(task)
+                print(f"Task added: {task}")
+            elif choice == "2":
+                print("\nCurrent Tasks:")
+                self.task_management.display_tasks()
+            elif choice == "3":
+                sort_by = input("Sort by (priority/deadline): ").strip().lower()
+                self.task_management.sort_tasks(by=sort_by)
+                print("\nSorted Tasks:")
+                self.task_management.display_tasks()
+            elif choice == "4":
+                task_id = int(input("Enter task ID to edit: "))  # User enters task ID
+                task = self.task_management.get_task_by_id(task_id) 
+                if not task:
+                    print(f"⚠️ Error: Task ID {task_id} not found! Please enter a valid ID.")
+                    continue
+                print("1. Change status")
+                print("2. Change priority")
+                print("3. Change deadline")
+                print("4. Mark as completed")
+                edit_choice = input("Enter edit option: ")
+
+                if edit_choice == "1":
+                    new_status = input("Enter new status: ")
+                    self.task_editing.set_task_status(task_id, new_status)
+                elif edit_choice == "2":
+                    new_priority = input("Enter new priority: ")
+                    self.task_editing.set_prioritization(task_id, new_priority)
+                elif edit_choice == "3":
+                    new_deadline = input("Enter new deadline (YYYY-MM-DD): ")
+                    self.task_editing.set_new_date(task_id, new_deadline)
+                elif edit_choice == "4":
+                    self.task_editing.mark_status_completed(task_id)
+                else:
+                    print("Invalid choice.")
+            elif choice == "5":
+                task_id = int(input("Enter task ID to add notes: "))
+                note = input("Enter the note: ")
+                task = self.task_management.get_task_by_id(task_id)
+                if task:
+                    task.add_notes(note)
+                    print(f"Note added to task {task_id}.")
+                else:
+                    print("Task not found.")
+            elif choice == "6":
+                print("Exiting Task Management System.")
+                break
+            else:
+                print("Invalid choice. Please try again.")
+
+# task_management_system/task_editing.py
+from datetime import datetime
+
+class TaskEditing:
+    def __init__(self, task_management):
+        self.task_management = task_management
+
+    def set_task_status(self, task_id, status):
+        task = self.get_task_by_id(task_id)
+        if not task:
+            return
+        task.status = status
+        self.task_management.save_tasks()
+        print(f"✅ Task {task_id} status updated to {status}.")
+
+    def set_prioritization(self, task_id, priority):
+        task = self.get_task_by_id(task_id)
+        if not task:
+            return
+        task.priority = priority
+        self.task_management.save_tasks()
+        print(f"✅ Task {task_id} priority updated to {priority}.")
+
+    def set_new_date(self, task_id, deadline):
+        task = self.get_task_by_id(task_id)
+        if not task:
+            return
+        task.deadline = datetime.strptime(deadline, "%Y-%m-%d")
+        task.days_to_accomplish_task = (task.deadline - datetime.today()).days
+        self.task_management.save_tasks()
+        print(f"✅ Task {task_id} deadline updated to {deadline}.")
+
+    def mark_status_completed(self, task_id):
+        task = self.get_task_by_id(task_id)
+        if not task:
+            return
+        task.status = "Completed"
+        self.task_management.save_tasks()
+        print(f"✅ Task {task_id} marked as Completed.")
+
+    def get_task_by_id(self, task_id):
+        for task in self.task_management.task_list:
+            if task.task_id == task_id:
+                return task
+        
+        return None
+
+
+# task_management_system/task_management.py
+import json
+import os
+from task_management_system.task import PersonalTask, WorkTask, StudyTask
+class TaskManagement:
+    def __init__(self):
+        self.task_list = []
+        self.load_tasks()
+
+    def add_task(self, task):
+        self.task_list.append(task)
+        self.save_tasks()
+
+    def save_tasks(self):
+        task_list_data = []
+        for task in self.task_list:
+            task_list_data.append({
+                "task_id": task.task_id,
+                "task_name": task.task_name,
+                "deadline": task.deadline.strftime("%Y-%m-%d"),
+                "status": task.status,
+                "priority": task.priority,
+                "color": task.color,
+                "notes": task.notes
+            })
+        with open("tasks.json", "w") as file:
+            json.dump(task_list_data, file,indent=4)
+
+    def load_tasks(self):
+        try:
+            with open("tasks.json", "r") as file:
+                task_list_data = json.load(file)
+            for task_data in task_list_data:
+                task_type = task_data.get("color", "").lower()
+                if task_type == "blue":
+                    task = PersonalTask(task_data["task_name"], task_data["deadline"], task_data["priority"])
+                elif task_type == "red":
+                    task = WorkTask(task_data["task_name"], task_data["deadline"], task_data["priority"])
+                elif task_type == "green":
+                    task = StudyTask(task_data["task_name"], task_data["deadline"], task_data["priority"])
+                else:
+                    continue 
+                task.task_id = task_data["task_id"]
+                task.status = task_data["status"]
+                task.notes = task_data["notes"]
+                
+                self.task_list.append(task)
+        except FileNotFoundError:
+            pass
+    def display_tasks(self):
+        if not self.task_list:
+            print("No tasks available.")
+            return
+        for task in self.task_list: 
+            print(task)
+
+    def sort_tasks(self, by="priority"):
+        if by == "priority":
+            self.task_list.sort(key=lambda x: x.priority)
+        elif by == "deadline":
+            self.task_list.sort(key=lambda x: x.deadline)
+
+    def get_task_by_id(self, task_id):
+        for task in self.task_list:
+            if task.task_id == task_id:
+                return task
+        
+        return None
+
+# task_management_system/task_tracking.py
+class TaskTracking:
+    def __init__(self, task_management):
+        self.task_management = task_management
+
+    def get_task_status(self, task_id):
+        task = self.get_task_by_id(task_id)
+        return task.status if task else None
+
+    def get_task_deadline(self, task_id):
+        task = self.get_task_by_id(task_id)
+        return task.deadline if task else None
+
+    def get_task_color(self, task_id):
+        task = self.get_task_by_id(task_id)
+        return task.color if task else None
+
+    def get_task_by_id(self, task_id):
+        for task in self.task_management.task_list:
+            if task.task_id == task_id:
+                return task
+        return None
+
+
+# task_management_system/task.py
+from abc import ABC, abstractmethod
+from datetime import datetime
+
+class Task(ABC):
+    task_counter = 0
+
+    def __init__(self, task_name, deadline, priority="Low"):
+        Task.task_counter += 1
+        self.task_id = Task.task_counter
+        self.task_name = task_name
+        self.deadline = datetime.strptime(deadline, "%Y-%m-%d") if isinstance(deadline, str) else deadline
+        self.status = "Pending"
+        self.priority = priority
+        self.color = ""
+        self.notes = ""
+        self.days_to_accomplish_task = (self.deadline - datetime.today()).days
+
+    @abstractmethod
+    def color_your_task(self):
+        """Abstract method to set color"""
+        pass
+
+    def add_notes(self, note):
+        self.notes += note + "\n"
+
+    def change_color(self, color):
+        self.color = color
+
+    def __str__(self):
+        return (f"Task[{self.task_id}] {self.task_name} | Status: {self.status} | Priority: {self.priority} | "
+                f"Deadline: {self.deadline.date()} | Color: {self.color} | Days Left: {self.days_to_accomplish_task} | "
+                f"Notes: {self.notes.strip()}")
+
+
+class PersonalTask(Task):
+    def __init__(self, task_name, deadline, priority="Low"):
+        super().__init__(task_name, deadline, priority)
+        self.color_your_task()
+
+    def color_your_task(self):
+        self.color = "Blue"
+
+
+class WorkTask(Task):
+    def __init__(self, task_name, deadline, priority="High"):
+        super().__init__(task_name, deadline, priority)
+        self.color_your_task()
+
+    def color_your_task(self):
+        self.color = "Red"
+
+
+class StudyTask(Task):
+    def __init__(self, task_name, deadline, priority="Medium"):
+        super().__init__(task_name, deadline, priority)
+        self.color_your_task()
+
+    def color_your_task(self):
+        self.color = "Green"
+
+
+tasks.json
+[
+    {
+        "task_id": 1,
+        "task_name": "walking",
+        "deadline": "2025-02-05",
+        "status": "Completed",
+        "priority": "Low",
+        "color": "Blue",
+        "notes": ""
+    },
+    {
+        "task_id": 2,
+        "task_name": "project",
+        "deadline": "2025-04-15",
+        "status": "Pending",
+        "priority": "High",
+        "color": "Red",
+        "notes": ""
+    }
+]
