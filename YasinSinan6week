@@ -1,0 +1,38 @@
+#####################################################################
+class WorkTask(Task):
+    def __init__(self, task_id, name, deadline):
+        super().__init__(task_id, name, deadline)
+        self.set_priority("High")
+        self.color_your_task()
+
+    def color_your_task(self):
+        self.set_color("Red")
+#####################################################################
+
+class TaskTracking:
+    def __init__(self, task_management):
+        self.__task_management = task_management
+
+    def get_task_status(self, task_id):
+        task = self.__task_management.get_task_by_id(task_id)
+        if task:
+            print(f"Status for Task {task_id}: {task['status']}")
+        else:
+            raise Exception("Task not found")
+    def get_task_deadline(self, task_id):
+        task = self.__task_management.get_task_by_id(task_id)
+        if task:
+            print(f"Deadline for Task {task_id}: {deadline.strftime('%Y-%m-%d %H:%M:%S')}")
+
+    def get_task_color(self, task_id):
+        task = self.__task_management.get_task_by_id(task_id)
+        print(f"Color for Task {task_id}: {task['color']}")
+
+    def mark_status_completed(self, task_id):
+        task = self.__task_management.get_task_by_id(task_id)
+        if task["status"] == "Completed":
+            print(f"Task {task_id} marked as Completed.")
+        else:
+            print (f"Task {task_id} is not completed")
+#############################################################################3
+        
