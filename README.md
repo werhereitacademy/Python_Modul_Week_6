@@ -1,4 +1,7 @@
 # Python_Modul_Week_6
+
+# TASK I
+
 ![image](https://github.com/user-attachments/assets/0c278632-b9fc-4a53-9d84-e87b007abf02)
 
 
@@ -67,6 +70,18 @@ Before working on this program, students should have a basic understanding of th
 ##### Expected Output:
 ![{63AE01CD-833A-4229-974B-D9E4E8BA5AFA}](https://github.com/user-attachments/assets/74bcc5db-cc04-4c99-8ca1-c9996d03c5fe)
 
+
+# TASK II
+
+### Below, you will find screenshots of Python class code for a Note application. Carefully examine the code and draw a UML (Unified Modeling Language) class diagram according to the following instructions:
+1.     Indicate the name of each class.
+2.     List the attributes (fields) and methods of each class.
+3.     Show the relationships between classes correctly.
+4.     If applicable, indicate collections like List<Note> explicitly in your diagram
+
+![image](https://github.com/user-attachments/assets/2bfeab3b-8d1e-4430-9019-c5501c99f758)
+![image](https://github.com/user-attachments/assets/3e019171-9b4b-48d0-8bfb-93caf4dd173d)
+![image](https://github.com/user-attachments/assets/12635427-2e96-4c2a-8137-2dee113a1058)
 
 
 
