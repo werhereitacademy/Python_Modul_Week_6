@@ -1,5 +1,6 @@
 # Python_Modul_Week_6
-![{F117AC8B-E655-458F-85AE-308565E3ED6C}](https://github.com/user-attachments/assets/6c950ca1-f386-43d2-872f-37bc79bd98fb)
+![image](https://github.com/user-attachments/assets/0c278632-b9fc-4a53-9d84-e87b007abf02)
+
 
 
 
@@ -13,54 +14,51 @@ Before working on this program, students should have a basic understanding of th
 4. Exception handling in Python.
 5. Basic knowledge of interfaces/abstract classes (Python ABC).
 ### Program Structure
-1.Task Management Class (TaskManagement):
-* This class serves as the core of the task management system.
-* It contains a list (taskList) to store tasks.
-* It provides methods to add and display tasks.
-  
-2.Task Scheduling Class (TaskScheduling):
-* This class is responsible for creating and adding tasks to the TaskManagement instance.
-* It uses the PersonalTask and WorkTask classes to create specific types of tasks.
-* It enforces proper task type (Personal or Work).
-  
-3.Task Editing Class (TaskEditing):
-* This class handles various editing operations on tasks.
-* Students will learn how to modify task attributes such as status, priority, and deadline.
-* They will also learn about searching for tasks and removing tasks from the list.
-  
-4.Task Tracking Class (TaskTracking):
-* This class allows tracking task statuses.
-* Students will learn how to retrieve the status of a task and mark tasks as completed.
-  
-5.Abstract Base Class (Task):
-* An abstract base class defines the common structure for PersonalTask and WorkTask subclasses.
-* It introduces the concept of abstract methods and demonstrates inheritance.
-  
-6.PersonalTask and WorkTask Classes:
-* These are subclasses of the ‘Task’ class, representing personal and work-related tasks.
-* Students will understand how to override methods and use class-specific attributes.
-* They will see how to implement interfaces/abstract classes (‘Priorization’).
-  
-7.Special Keywords Dictionary (SPECIAL_KEYWORDS):
-* A dictionary is used to handle special keywords like "today," "tomorrow," and "next week" for deadlines.
-* Students will learn about dictionary usage and date manipulation.
-  
-#### Key Learning Points
-* Object-Oriented Programming concepts (classes, objects, inheritance, abstract classes).
-* Proper encapsulation and data hiding.
-* Exception handling for task lookup.
-* Working with dates and times using the datetime module.
-* Using dictionaries for mapping special keywords.
-* Implementing interfaces/abstract classes in Python.
-  
-#### Assignment/Exercises for Students
-1. Create a new task type (e.g., "StudyTask") by extending the program. Implement its specific behavior and attributes.
-2. Add more editing operations (e.g., change task color or add notes).
-3. Implement a feature to sort tasks by priority or deadline.
-4. Create a user interface (e.g., a command-line or graphical interface) to interact with the task management system.
-5. Write unit tests to ensure the program's functionality is correct.
-   
-- By working on these exercises, students can deepen their understanding of OOP principles and improve their Python programming skills.
+1. **Task Management Class (`TaskManagement`)**
+  This class serves as the core component of the task management system.
+  - It maintains a list (`task_list`) to store all task objects.
+  - It provides methods to add new tasks and display the list of existing tasks.
+2. **Task Scheduling (Handled via instantiating `PersonalTask` or `WorkTask`)**
+  While not represented by a separate class in the code, task creation and classification are performed by instantiating `PersonalTask` and `WorkTask`.
+  - These objects are then added to `TaskManagement`.
+  - It ensures appropriate task typing by using inheritance.
+3. **Task Editing Class (`TaskEditing`)**
+  This class enables various edit operations on existing tasks.
+  - Students learn how to modify task attributes such as `status`, `priority`, and `deadline`.
+  - It also demonstrates how to find tasks by ID and update their attributes.
+4. **Task Tracking Class (`TaskTracking`)**
+  This class allows for tracking the state and metadata of tasks.
+  - Students can retrieve task status, deadline, and color by task ID.
+  - It provides read-only access to key attributes.
+5. **Abstract Base Class (`Task`)**
+  Defines the common structure and behavior for all task types.
+  - Includes attributes such as `task_id`, `task_name`, `deadline`, `status`, `priority`, and `color`.
+  - Contains a method to calculate the number of days left until the deadline.
+  - Declares an abstract method `color_your_task()` to be implemented by subclasses.
+6. **Subclasses (`PersonalTask` and `WorkTask`)**
+  These classes inherit from `Task` and define behavior specific to personal and work-related tasks.
+  - They implement the `color_your_task()` method to assign different colors.
+  - Default priorities are also handled here (e.g., `Low` for personal, `High` for work).
+  - Demonstrates inheritance and method overriding.
+7. **Special Keywords Dictionary (`SPECIAL_KEYWORDS`)**
+  A global dictionary maps strings like `"today"`, `"tomorrow"`, and `"next week"` to actual dates using `datetime`.
+  - Teaches students about dictionary usage and date manipulation in Python.
+---
+### Key Learning Points
+- Core Object-Oriented Programming concepts: classes, objects, inheritance, and abstract base classes.
+- Proper encapsulation and separation of concerns (management, editing, and tracking are decoupled).
+- Exception handling and task lookup strategies.
+- Working with date and time using Python’s `datetime` module.
+- Using dictionaries for keyword mapping and processing.
+- Implementing and overriding abstract methods in subclasses.
+---
+### Assignment Ideas for Students
+- Create a new task type (e.g., `StudyTask`) that inherits from `Task` and implements custom behavior and attributes.
+- Extend the editing functionality to include features like setting a task note or changing the color manually.
+- Add the ability to sort tasks by priority or deadline.
+- Develop a simple command-line interface (CLI) or GUI to interact with the task manager.
+- Write unit tests to verify that core functionalities (adding, editing, tracking) work as expected.
+> By working on these exercises, students will strengthen their understanding of OOP principles and improve their Python software development skills.
 
 ##### Exp: Let's consider an example where we create, edit, and track tasks using your program:
 ![image (2)](https://github.com/user-attachments/assets/7b70b1c1-3e67-4bf6-9629-e4badab118d3)
