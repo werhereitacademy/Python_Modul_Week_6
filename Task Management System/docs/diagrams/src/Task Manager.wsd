@@ -1,0 +1,68 @@
+@startuml
+
+' Soyut sınıf
+abstract class Task {
+    - task_id: int
+    - task_name: str
+    - deadline: str
+    - status: str
+    - priority: str
+    - color: str
+    + days_to_accomplish_task(): int
+    + color_your_task(): str
+}
+
+class PersonalTask {
+    + color_your_task(): str
+}
+
+class WorkTask {
+    + color_your_task(): str
+}
+
+class TaskManagement {
+    - task_list: List[Task]
+    + add_task(task: Task): None
+    + display_tasks(): None
+}
+
+class TaskEditing {
+    - taskManagement
+    + set_task_status(task_id: int, status: str): None
+    + set_prioritization(task_id: int, priority: str): None
+    + set_new_date(task_id: int, deadline: str): None
+    + mark_status_completed(task_id: int): None
+    + get_task_by_id(task_id: int): Task | None
+}
+
+class TaskTracking {
+    - taskManagement
+    + get_task_status(task_id: int): None
+    + get_task_deadline(task_id: int): None
+    + get_task_color(task_id: int): None
+    + get_task_by_id(task_id: int): Task | None
+}
+
+class chief {
+    .. Imports all modules ..
+    .. Creates TaskManagement ..
+    .. Creates & adds tasks ..
+    .. Uses TaskEditing & Tracking ..
+}
+
+' Kalıtım ilişkileri
+Task <|-- PersonalTask
+Task <|-- WorkTask
+
+' Bileşen ilişkileri
+TaskManagement *-- Task
+TaskEditing --> TaskManagement
+TaskTracking --> TaskManagement
+chief --> TaskEditing
+chief --> TaskTracking
+chief --> TaskManagement
+TaskManagement *-- Task
+
+@enduml
+' This diagram represents the Task Management System.
+' It includes classes for managing tasks, editing tasks, and tracking tasks.

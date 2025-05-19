@@ -1,0 +1,19 @@
+@startuml
+class Note {
+  + title: str
+  + content: str
+  + __init__(self, title, content)
+}
+
+class NoteManager {
+  + notes: list[Note]:
+  + __init__(self)
+  + add_note(self, title, content)
+  + edit_note(self, index, title, content)
+  + delete_note(self, index)
+  + list_notes(self)
+}
+
+main --|> NoteManager
+NoteManager --o Note
+@enduml
