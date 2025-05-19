@@ -61,7 +61,6 @@ TaskTracking --> TaskManagement
 chief --> TaskEditing
 chief --> TaskTracking
 chief --> TaskManagement
-TaskManagement *-- Task
 
 @enduml
 ' This diagram represents the Task Management System.
