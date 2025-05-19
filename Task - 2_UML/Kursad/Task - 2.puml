@@ -6,7 +6,7 @@ class Note {
 }
 
 class NoteManager {
-  + notes: list[Note]:
+  ~ notes: list[Note]:
   + __init__(self)
   + add_note(self, title, content)
   + edit_note(self, index, title, content)
