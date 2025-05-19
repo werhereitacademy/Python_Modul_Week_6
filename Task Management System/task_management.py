@@ -1,2 +1,2 @@
-class TaskManagemen:
+class TaskManagement:
     pass

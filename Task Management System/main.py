@@ -1,15 +1,10 @@
 import task_management as tm
 import task_editing as te
 import task_tracking as tt
+from task import *
+from datetime import datetime
 import menu
 
-# Geçerli bir sayısal giriş yapılmasını sağlar.
-def get_user_choice(message="Lütfen bir işlem numarası giriniz: "):
-    while True:
-        try:
-            return  int(input(message))
-        except Exception as e:
-            print(f"Geçersiz giriş: {e}")
 
 def get_available_id(tm1):
     """
@@ -21,25 +16,58 @@ def get_available_id(tm1):
     return min(set(range(1, max(task_ids) + 2)) - set(task_ids))
 
 
+def get_date_input(prompt):
+    while True:
+        date_input = input(f"{prompt} (YYYY-MM-DD): ").strip()
+        try:
+            datetime.strptime(date_input, "%Y-%m-%d")
+            return date_input
+        except ValueError:
+            print("⚠️ Geçersiz tarih formatı. Örn: 2025-12-01")
+
+def get_nonempty_input(prompt):
+    while True:
+        data = input(prompt).strip()
+        if data:
+            return data
+        else:
+            print("⚠️ Bu alan boş bırakılamaz.")
+
 def add_task(tm1):
-    menu.header("➕   Add a New Task")
+    menu.header("➕   Yeni Görev Ekle")
     try:
         task_id = get_available_id(tm1)
-        task_name = input("Görev adı: ")
-        deadline = input("Görev son tarihi (YYYY-MM-DD): ")
-        
-        task_type = input("Görev türü (1: Kişisel, 2: İş): ")
-        if task_type == "1":
-            tsk = PersonalTask()
-        elif task_type == "2":
-            tsk = Worktask()
-        else:
-            raise ValueError("Geçersiz görev türü.")
+        name = get_nonempty_input("Görev Adı: ")
+        deadline = get_date_input("Görev Son Tarihi")
 
-        tm1.add_task(tsk)
-        print("Görev başarıyla eklendi.")
+        status = menu.show_options("Durum Seçiniz", {
+            "1": "Tamamlandı",
+            "2": "Devam Ediyor",
+            "3": "Beklemede"
+        })
+
+        priority = menu.show_options("Öncelik Seçiniz", {
+            "1": "Düşük",
+            "2": "Orta",
+            "3": "Yüksek"
+        })
+
+        task_type = menu.show_options("Görev Türü", {
+            "1": "Kişisel Görev",
+            "2": "İş Görevi"
+        })
+
+        if task_type == "Kişisel Görev":
+            task = PersonalTask(task_id, name, deadline, status, priority)
+        else:
+            task = WorkTask(task_id, name, deadline, status, priority)
+
+        tm1.add_task(task)
+        print("\n✅ Görev başarıyla eklendi.")
+
     except Exception as e:
-        print(f"Geçersiz giriş: {e}")
+        print(f"\n❌ Hata: {e}")
+
 
 def edit_task(tm1):
     tm1.display_tasks()
@@ -69,9 +97,7 @@ def track_task(tm1):
 def main():
     tm1 = tm.TaskManagement()
     while True:
-        menu.display_main_menu()
-
-        choice = get_user_choice()
+        choice = menu.display_main_menu()
 
         if choice == 1:
             add_task(tm1)
