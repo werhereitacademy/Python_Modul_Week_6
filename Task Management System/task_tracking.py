@@ -18,7 +18,7 @@ class TaskTracking:
     def get_task_deadline(self, task_id : int) -> None:
         task = self.get_task_by_id(task_id)
         if task:
-            print(f"Dedline of task {task_id}: {task.deadline}")
+            print(f"Deadline of task {task_id}: {task.deadline}")
 
     def get_task_color(self, task_id : int) -> None:
         task = self.get_task_by_id(task_id)
