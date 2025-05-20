@@ -8,3 +8,4 @@ class TaskManagement:
     def display_tasks(self):
         for task in self.task_list:
             print(f"ID: {task.task_id}, Name: {task.task_name}, Deadline: {task.deadline}, Status: {task.status}, Priority: {task.priority}, Color: {task.color}")
+            print(f"ID: {task.task_id}, Name: {task.task_name}, Deadline: {task.deadline}, Status: {task.status}, Priority: {task.priority}, Color: {task.color}")
