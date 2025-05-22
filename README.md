@@ -94,9 +94,3 @@ Before working on this program, students should have a basic understanding of th
 3. Mutations: https://www.hackerrank.com/challenges/python-mutations/problem
 
 4. Text Wrap: https://www.hackerrank.com/challenges/text-wrap/problem
-
-
-Ali: task.py
-Furkan: task_management
-Mustfa: task_tracking
-Lütfü: task_editing
