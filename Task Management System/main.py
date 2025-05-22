@@ -91,13 +91,13 @@ def get_date_input(prompt: str) -> str:
         prompt (str): The message to display to the user.
     
     Returns:
-        str: A valid date string.
+        str: A valid date string in strict YYYY-MM-DD format (e.g., 2025-01-01).
     """
     while True:
         date_input = input(f"{prompt} (YYYY-MM-DD): ").strip()
         try:
-            datetime.strptime(date_input, "%Y-%m-%d")
-            return date_input
+            parsed_date = datetime.strptime(date_input, "%Y-%m-%d")
+            return parsed_date.strftime("%Y-%m-%d")  # Formats it strictly with leading zeros
         except ValueError:
             menu.show_message("⚠️ Invalid date format. Example: 2025-12-01")
 
