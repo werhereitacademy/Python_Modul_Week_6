@@ -27,7 +27,8 @@ def read_json(file):
 
 
 #json dosyasina yaz
-def write_json(filepath, data):
+def write_json(file, data):
+     filepath = get_file_path(file)
      with open(filepath, 'w', encoding='utf-8') as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
 

@@ -33,20 +33,19 @@ def print_centered_colored_line(menu_name, width=30, color_code="\033[1;33m"):
 # Prints a stylized menu header
 def header(menu_name, menu_width=30):
     clear_screen()
-    print_centered_colored_line(menu_name, 30)
+    print_centered_colored_line(menu_name, menu_width)
     print('-' * menu_width)
 
-def show_list(title, column_names, list_items, width=100):
-    header(title, width)
-
+def show_list(title, column_names, list_items):
     # Sütun genişlikleri (manuel olarak ayarlanabilir veya otomatik yapılabilir)
-    col_widths = [6, 20, 14, 14, 10, 10]  # toplam: ~74 + boşluklar = 100 içinde rahat
+    col_widths = [6, 25, 12, 14, 12, 10]  # toplam: ~74 + boşluklar = 100 içinde rahat
 
     # Başlıkları hizalı yazdır
-    header_row = '| ' + ' | '.join(name.ljust(col_widths[i]) for i, name in enumerate(column_names)) + ' |'
-    print('-' * len(header_row))
+    header_row = '| ' + '| '.join(name.center(col_widths[i]) for i, name in enumerate(column_names)) + '|'
+    menu_width = len(header_row) + 5  # Başlık genişliğini al
+    header(title, menu_width)
     print(header_row)
-    print('-' * len(header_row))
+    print('-' * menu_width)
 
     # Satırları hizalı yazdır
     for i, item in enumerate(list_items, start=1):
@@ -62,9 +61,9 @@ def show_list(title, column_names, list_items, width=100):
             row = '| ' + ' | '.join(values[i].ljust(col_widths[i]) for i in range(len(values))) + ' |'
             print(row)
         else:
-            print(f"| {str(i).ljust(width - 4)} |")  # fallback
+            print(f"| {str(i).ljust(menu_width - 4)} |")  # fallback
 
-    print('-' * len(header_row))
+    print('-' * menu_width)
 
 
 # General-purpose menu display function
@@ -80,7 +79,7 @@ def show_options(title, options):
     print(f"\n🔹 {title}")
     for key, val in options.items():
         print(f"   {key}: {val}")
-    return get_choice(options)
+    return options[get_choice(options)]
 
 # Main menu display function
 def display_main_menu():

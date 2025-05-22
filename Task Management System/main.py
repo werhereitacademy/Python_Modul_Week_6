@@ -11,6 +11,7 @@ def load_tasks_from_file(file_path):
     Load tasks from a JSON file.
     """
     tasks = read_json(file_path)
+    tasks = sorted(tasks, key=lambda x: x["task_id"])
     task_list = []
     for task in tasks:
         if task['task_type'] == 'PersonalTask':
