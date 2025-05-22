@@ -7,3 +7,5 @@ __pycache__/
 
 # .DS_Store ve benzeri sistem dosyaları (opsiyonel)
 .DS_Store
+
+x.ipynb

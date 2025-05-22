@@ -88,7 +88,7 @@ def show_tasks(tm1):
     if not tlist:
         menu.show_message("⚠️ No tasks available.")
         return
-    column_names = ["🆔 ID", "📌 Name", "📅 Deadline", "📊 Status", "⚡ Priority", "🎨 Color"]
+    column_names = ["🆔 ID", "📌 Name", "📅 Deadline", "📊 Status", "⚡ Priority"]
     menu.show_list("📋   Task List", column_names, tlist)
     menu.show_message("")
 

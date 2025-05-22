@@ -33,21 +33,31 @@ def print_centered_colored_line(menu_name, width=30, color_code="\033[1;33m"):
 # Prints a stylized menu header
 def header(menu_name, menu_width=30):
     clear_screen()
+    print()
     print_centered_colored_line(menu_name, menu_width)
     print('-' * menu_width)
 
 def show_list(title, column_names, list_items):
-    # Sütun genişlikleri (manuel olarak ayarlanabilir veya otomatik yapılabilir)
-    col_widths = [6, 25, 12, 14, 12, 10]  # toplam: ~74 + boşluklar = 100 içinde rahat
+    # ANSI color codes
+    color_map = {
+        "Blue": "\033[94m",
+        "Geel": "\033[93m",
+        "Red": "\033[91m",
+        "Green": "\033[92m",
+        "Reset": "\033[0m"
+    }
 
-    # Başlıkları hizalı yazdır
-    header_row = '| ' + '| '.join(name.center(col_widths[i]) for i, name in enumerate(column_names)) + '|'
-    menu_width = len(header_row) + 5  # Başlık genişliğini al
+    # Column widths
+    col_widths = [6, 25, 12, 14, 12]
+
+    # Build and print the header
+    header_row = '| ' + '| '.join(name.center(col_widths[i]) for i, name in enumerate(column_names)) + ' |'
+    menu_width = len(header_row) + 5  # 5 for the borders
     header(title, menu_width)
     print(header_row)
     print('-' * menu_width)
 
-    # Satırları hizalı yazdır
+    # Print each task row
     for i, item in enumerate(list_items, start=1):
         if hasattr(item, '__dict__'):
             values = [
@@ -56,21 +66,23 @@ def show_list(title, column_names, list_items):
                 str(item.deadline),
                 str(item.status),
                 str(item.priority),
-                str(item.color)
             ]
-            row = '| ' + ' | '.join(values[i].ljust(col_widths[i]) for i in range(len(values))) + ' |'
-            print(row)
-        else:
-            print(f"| {str(i).ljust(menu_width - 4)} |")  # fallback
+            # Color only the content between the borders
+            color_code = color_map.get(item.color, "")
+            reset = color_map["Reset"]
+
+            colored_row = '| ' + ' | '.join(
+                f"{color_code}{values[i].ljust(col_widths[i])}{reset}" for i in range(len(values))
+            ) + '  |'
+            print(colored_row)
 
     print('-' * menu_width)
-
 
 # General-purpose menu display function
 def show_menu(title, options, width=30):
     header(title, width)
     for key, val in options.items():
-        print('|' + ' ' * 5 + f"   {key} - {val}".ljust(width - 7) + '|')
+        print('|' + ' ' * 4 + f"   {key} - {val}".ljust(width - 6) + '|')
     print('-' * width)
     return get_choice(options.keys())
 
