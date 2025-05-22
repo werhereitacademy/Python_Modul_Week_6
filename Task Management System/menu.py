@@ -28,14 +28,44 @@ def print_centered_colored_line(menu_name, width=30, color_code="\033[1;33m"):
     colored_text = f"{color_code}{text}{reset_code}"
     
     # Kenarlara çerçeve çizgileri ekle
-    print('|' + colored_text + '|')            
+    print(colored_text)            
 
 # Prints a stylized menu header
 def header(menu_name, menu_width=30):
     clear_screen()
-    print('-' * menu_width)
     print_centered_colored_line(menu_name, 30)
     print('-' * menu_width)
+
+def show_list(title, column_names, list_items, width=100):
+    header(title, width)
+
+    # Sütun genişlikleri (manuel olarak ayarlanabilir veya otomatik yapılabilir)
+    col_widths = [6, 20, 14, 14, 10, 10]  # toplam: ~74 + boşluklar = 100 içinde rahat
+
+    # Başlıkları hizalı yazdır
+    header_row = '| ' + ' | '.join(name.ljust(col_widths[i]) for i, name in enumerate(column_names)) + ' |'
+    print('-' * len(header_row))
+    print(header_row)
+    print('-' * len(header_row))
+
+    # Satırları hizalı yazdır
+    for i, item in enumerate(list_items, start=1):
+        if hasattr(item, '__dict__'):
+            values = [
+                str(item.task_id),
+                str(item.task_name),
+                str(item.deadline),
+                str(item.status),
+                str(item.priority),
+                str(item.color)
+            ]
+            row = '| ' + ' | '.join(values[i].ljust(col_widths[i]) for i in range(len(values))) + ' |'
+            print(row)
+        else:
+            print(f"| {str(i).ljust(width - 4)} |")  # fallback
+
+    print('-' * len(header_row))
+
 
 # General-purpose menu display function
 def show_menu(title, options, width=30):
@@ -55,9 +85,9 @@ def show_options(title, options):
 # Main menu display function
 def display_main_menu():
     return show_menu("Task Management System", {
-        "1": "Add Task",
-        "2": "Edit Task",
-        "3": "Track Task",
+        "1": "Show Tasks",
+        "2": "Add Task",
+        "3": "Edit Task",
         "0": "Exit"
     })
 

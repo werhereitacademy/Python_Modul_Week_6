@@ -4,8 +4,56 @@ import task_tracking as tt
 from task import *
 from datetime import datetime
 import menu
+from file_io import *
 
+def load_tasks_from_file(file_path):
+    """
+    Load tasks from a JSON file.
+    """
+    tasks = read_json(file_path)
+    task_list = []
+    for task in tasks:
+        if task['task_type'] == 'PersonalTask':
+            task_obj = PersonalTask(
+                task_id=task['task_id'],
+                task_name=task['task_name'],
+                deadline=task['deadline'],
+                status=task['status'],
+                priority=task['priority'],
+            )
+        elif task['task_type'] == 'WorkTask':
+            task_obj = WorkTask(
+                task_id=task['task_id'],
+                task_name=task['task_name'],
+                deadline=task['deadline'],
+                status=task['status'],
+                priority=task['priority'],
+            )
+        else:
+            continue
+        task_list.append(task_obj)
+    return task_list
 
+def save_tasks_to_file(file_path, task_list):
+    """
+    Save tasks to a JSON file.
+    """
+    tasks = []
+    for task in task_list:
+        task_data = {
+            'task_type': type(task).__name__,
+            'task_id': task.task_id,
+            'task_name': task.task_name,
+            'deadline': task.deadline,
+            'status': task.status,
+            'priority': task.priority,
+            'color': task.color
+        }
+        tasks.append(task_data)
+    write_json(file_path, tasks)
+
+# This function checks existing task IDs and returns the smallest available ID.
+# It is used to ensure that each task has a unique ID.
 def get_available_id(tm1):
     """
     This function checks existing task IDs and returns the smallest available ID.
@@ -33,7 +81,18 @@ def get_nonempty_input(prompt):
         else:
             menu.show_message("⚠️ This field cannot be empty.")
 
-def add_task(tm1):
+def show_tasks(tm1):
+    ttrack = tt.TaskTracking(tm1)
+    tlist = tm1.task_list
+    if not tlist:
+        menu.show_message("⚠️ No tasks available.")
+        return
+    column_names = ["🆔 ID", "📌 Name", "📅 Deadline", "📊 Status", "⚡ Priority", "🎨 Color"]
+    menu.show_list("📋   Task List", column_names, tlist)
+    menu.show_message("")
+
+
+def add_task(file_path, tm1):
     menu.header("➕   Add a New Task")
     try:
         task_id = get_available_id(tm1)
@@ -63,7 +122,8 @@ def add_task(tm1):
             task = WorkTask(task_id, name, deadline, status, priority)
 
         tm1.add_task(task)
-        menu.show_message("\n✅ Task added successfully.")
+        save_tasks_to_file(file_path, tm1.task_list)
+        menu.show_message(f"\n✅ Task added successfully with ID: {task_id}")
 
     except Exception as e:
         menu.show_message(f"\n❌ Error: {e}")
@@ -117,39 +177,26 @@ def edit_task(tm1):
         f"📊 Status: {task_to_edit.status}\n"
         f"⚡ Priority: {task_to_edit.priority}\n"
         f"📅 Deadline: {task_to_edit.deadline}"
-)
-
-
-def track_task(tm1):
-    ttrack = tt.TaskTracking(tm1)
-    menu.header("📊   Task Tracking")
-    task_id = int(input("Enter the ID of the task you want to edit: "))
-    task_to_track = ttrack.get_task_by_id(task_id)
-    if not task_to_track:
-        menu.show_message("⚠️ Task not found.")
-        return
-
-
-    print(f"🆔 ID: {task_to_track.task_id}\n"
-          f"📌 Name: {task_to_track.task_name}\n"
-          f"📊 Status: {task_to_track.status}\n"
-          f"⚡ Priority: {task_to_track.priority}\n"
-          f"📅 Deadline: {task_to_track.deadline}\n"
-          f"🎨 Color: {task_to_track.color}\n"
-          )
+        )
 
 
 def main():
     tm1 = tm.TaskManagement()
+    task_file = 'tasks.json'
+    tm1.task_list = load_tasks_from_file(task_file)
+
+    # Main menu loop
     while True:
         choice = menu.display_main_menu()
 
         if choice == "1":
-            add_task(tm1)
+            menu.header("📋   Task List")
+            show_tasks(tm1)
         elif choice == "2":
-            edit_task(tm1)
+            add_task(task_file, tm1)
         elif choice == "3":
-            track_task(tm1)
+            edit_task(tm1)
+
         elif choice == "0":
             print("Exiting the program...")
             break
