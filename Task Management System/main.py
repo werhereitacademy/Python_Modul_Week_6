@@ -5,10 +5,18 @@ from task import *
 from datetime import datetime
 import menu
 from file_io import *
+from typing import List
 
-def load_tasks_from_file(file_path):
+
+def load_tasks_from_file(file_path: str) -> List[Task]:
     """
-    Load tasks from a JSON file.
+    Load tasks from a JSON file and return a list of Task objects.
+    
+    Args:
+        file_path (str): Path to the JSON file containing tasks.
+    
+    Returns:
+        List[Task]: A list of task objects (PersonalTask or WorkTask).
     """
     tasks = read_json(file_path)
     tasks = sorted(tasks, key=lambda x: x["task_id"])
@@ -35,9 +43,14 @@ def load_tasks_from_file(file_path):
         task_list.append(task_obj)
     return task_list
 
-def save_tasks_to_file(file_path, task_list):
+
+def save_tasks_to_file(file_path: str, task_list: List[Task]) -> None:
     """
-    Save tasks to a JSON file.
+    Save a list of Task objects to a JSON file.
+    
+    Args:
+        file_path (str): Path to the JSON file to save tasks.
+        task_list (List[Task]): List of task objects to be saved.
     """
     tasks = []
     for task in task_list:
@@ -53,11 +66,16 @@ def save_tasks_to_file(file_path, task_list):
         tasks.append(task_data)
     write_json(file_path, tasks)
 
-# This function checks existing task IDs and returns the smallest available ID.
-# It is used to ensure that each task has a unique ID.
-def get_available_id(tm1):
+
+def get_available_id(tm1: tm.TaskManagement) -> int:
     """
-    This function checks existing task IDs and returns the smallest available ID.
+    Get the smallest available task ID that is not currently used.
+    
+    Args:
+        tm1 (TaskManagement): The task management object.
+    
+    Returns:
+        int: The next available task ID.
     """
     task_ids = [task.task_id for task in tm1.task_list]
     if not task_ids:
@@ -65,7 +83,16 @@ def get_available_id(tm1):
     return min(set(range(1, max(task_ids) + 2)) - set(task_ids))
 
 
-def get_date_input(prompt):
+def get_date_input(prompt: str) -> str:
+    """
+    Prompt the user to enter a valid date string in YYYY-MM-DD format.
+    
+    Args:
+        prompt (str): The message to display to the user.
+    
+    Returns:
+        str: A valid date string.
+    """
     while True:
         date_input = input(f"{prompt} (YYYY-MM-DD): ").strip()
         try:
@@ -74,7 +101,17 @@ def get_date_input(prompt):
         except ValueError:
             menu.show_message("⚠️ Invalid date format. Example: 2025-12-01")
 
-def get_nonempty_input(prompt):
+
+def get_nonempty_input(prompt: str) -> str:
+    """
+    Prompt the user until they provide a non-empty input.
+    
+    Args:
+        prompt (str): The message to display to the user.
+    
+    Returns:
+        str: The user input.
+    """
     while True:
         data = input(prompt).strip()
         if data:
@@ -82,7 +119,14 @@ def get_nonempty_input(prompt):
         else:
             menu.show_message("⚠️ This field cannot be empty.")
 
-def show_tasks(tm1):
+
+def show_tasks(tm1: tm.TaskManagement) -> None:
+    """
+    Display the list of tasks in a tabular format.
+    
+    Args:
+        tm1 (TaskManagement): The task management object.
+    """
     ttrack = tt.TaskTracking(tm1)
     tlist = tm1.task_list
     if not tlist:
@@ -93,7 +137,14 @@ def show_tasks(tm1):
     menu.show_message("")
 
 
-def add_task(file_path, tm1):
+def add_task(file_path: str, tm1: tm.TaskManagement) -> None:
+    """
+    Add a new task and save it to file.
+    
+    Args:
+        file_path (str): Path to the JSON file to save the task.
+        tm1 (TaskManagement): The task management object.
+    """
     menu.header("➕   Add a New Task")
     try:
         task_id = get_available_id(tm1)
@@ -130,7 +181,13 @@ def add_task(file_path, tm1):
         menu.show_message(f"\n❌ Error: {e}")
 
 
-def edit_task(tm1):
+def edit_task(tm1: tm.TaskManagement) -> None:
+    """
+    Edit an existing task's status, priority, deadline, or mark it as completed.
+    
+    Args:
+        tm1 (TaskManagement): The task management object.
+    """
     tedit = te.TaskEditing(tm1)
     menu.header("✏️   Edit a Task")
     tm1.display_tasks()
@@ -153,7 +210,7 @@ def edit_task(tm1):
             "2": "In Progress",
             "3": "Pending"
         })
-        tedit.set_task_status(task_id, new_status)   
+        tedit.set_task_status(task_id, new_status)
     elif editing_option == "2":
         new_priority = menu.show_options("Select New Priority", {
             "1": "Low",
@@ -165,12 +222,11 @@ def edit_task(tm1):
         new_deadline = get_date_input("Enter New Deadline")
         tedit.set_new_date(task_id, new_deadline)
     elif editing_option == "4":
-        tedit.mark_status_completed(task_id) 
+        tedit.mark_status_completed(task_id)
     else:
         menu.show_message("⚠️ Invalid option selected.")
         return
-    
-    # Display the updated task details
+
     print("✅ Task updated successfully.")
     menu.show_message(
         f"🆔 ID: {task_to_edit.task_id}\n"
@@ -178,15 +234,18 @@ def edit_task(tm1):
         f"📊 Status: {task_to_edit.status}\n"
         f"⚡ Priority: {task_to_edit.priority}\n"
         f"📅 Deadline: {task_to_edit.deadline}"
-        )
+    )
 
 
-def main():
+def main() -> None:
+    """
+    Entry point of the task manager application.
+    Handles loading tasks, displaying menu, and responding to user choices.
+    """
     tm1 = tm.TaskManagement()
     task_file = 'tasks.json'
     tm1.task_list = load_tasks_from_file(task_file)
 
-    # Main menu loop
     while True:
         choice = menu.display_main_menu()
 
@@ -197,10 +256,10 @@ def main():
             add_task(task_file, tm1)
         elif choice == "3":
             edit_task(tm1)
-
         elif choice == "0":
-            print("Exiting the program...")
+            print("Exiting the program...\n")
             break
+
 
 if __name__ == "__main__":
     main()

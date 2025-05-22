@@ -90,6 +90,15 @@
         "color": "Blue"
     },
     {
+        "task_type": "WorkTask",
+        "task_id": 11,
+        "task_name": "wecweqcwqc",
+        "deadline": "1956-12-6",
+        "status": "Completed",
+        "priority": "Medium",
+        "color": "Geel"
+    },
+    {
         "task_type": "PersonalTask",
         "task_id": 12,
         "task_name": "dwedc",
@@ -99,12 +108,12 @@
         "color": "Blue"
     },
     {
-        "task_type": "WorkTask",
-        "task_id": 11,
-        "task_name": "wecweqcwqc",
-        "deadline": "1956-12-6",
+        "task_type": "PersonalTask",
+        "task_id": 13,
+        "task_name": "\"\"\"",
+        "deadline": "2026-01-02",
         "status": "Completed",
-        "priority": "Medium",
-        "color": "Geel"
+        "priority": "Low",
+        "color": "Blue"
     }
 ]
