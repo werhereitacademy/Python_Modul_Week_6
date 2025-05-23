@@ -1,0 +1,128 @@
+[
+    {
+        "task_type": "PersonalTask",
+        "task_id": 1,
+        "task_name": "Read a book",
+        "deadline": "2025-05-15",
+        "status": "Completed",
+        "priority": "High",
+        "color": "Blue"
+    },
+    {
+        "task_type": "WorkTask",
+        "task_id": 2,
+        "task_name": "Prepare project report",
+        "deadline": "2025-05-30",
+        "status": "Completed",
+        "priority": "Low",
+        "color": "Yellow"
+    },
+    {
+        "task_type": "PersonalTask",
+        "task_id": 3,
+        "task_name": "Visit dentist",
+        "deadline": "2025-06-05",
+        "status": "Pending",
+        "priority": "Medium",
+        "color": "Blue"
+    },
+    {
+        "task_type": "WorkTask",
+        "task_id": 4,
+        "task_name": "Team meeting",
+        "deadline": "2025-05-25",
+        "status": "Completed",
+        "priority": "Low",
+        "color": "Yellow"
+    },
+    {
+        "task_type": "WorkTask",
+        "task_id": 5,
+        "task_name": "Deploy website update",
+        "deadline": "2025-06-01",
+        "status": "In Progress",
+        "priority": "High",
+        "color": "Yellow"
+    },
+    {
+        "task_type": "PersonalTask",
+        "task_id": 6,
+        "task_name": "Buy groceries",
+        "deadline": "2025-05-20",
+        "status": "Completed",
+        "priority": "Low",
+        "color": "Blue"
+    },
+    {
+        "task_type": "WorkTask",
+        "task_id": 7,
+        "task_name": "Client feedback review",
+        "deadline": "2025-06-02",
+        "status": "Pending",
+        "priority": "Medium",
+        "color": "Yellow"
+    },
+    {
+        "task_type": "PersonalTask",
+        "task_id": 8,
+        "task_name": "Meditation session",
+        "deadline": "2025-05-21",
+        "status": "In Progress",
+        "priority": "Low",
+        "color": "Blue"
+    },
+    {
+        "task_type": "WorkTask",
+        "task_id": 9,
+        "task_name": "Backup database",
+        "deadline": "2025-06-03",
+        "status": "Pending",
+        "priority": "High",
+        "color": "Yellow"
+    },
+    {
+        "task_type": "PersonalTask",
+        "task_id": 10,
+        "task_name": "Call parents",
+        "deadline": "2025-05-22",
+        "status": "Completed",
+        "priority": "Medium",
+        "color": "Blue"
+    },
+    {
+        "task_type": "WorkTask",
+        "task_id": 11,
+        "task_name": "wecweqcwqc",
+        "deadline": "1956-12-6",
+        "status": "Completed",
+        "priority": "Medium",
+        "color": "Yellow"
+    },
+    {
+        "task_type": "PersonalTask",
+        "task_id": 12,
+        "task_name": "dwedc",
+        "deadline": "2025-4-8",
+        "status": "Completed",
+        "priority": "Low",
+        "color": "Blue"
+    },
+    {
+        "task_type": "PersonalTask",
+        "task_id": 13,
+        "task_name": "\"\"\"",
+        "deadline": "2026-01-02",
+        "status": "Completed",
+        "priority": "Low",
+        "color": "Blue"
+    },
+    {
+        "task_type": "WorkTask",
+        "task_id": 14,
+        "task_name": "Hand in your homework",
+        "deadline": "2025-05-23",
+        "status": "In Progress",
+        "priority": "High",
+        "color": "Yellow"
+    }
+]

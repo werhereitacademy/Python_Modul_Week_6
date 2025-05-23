@@ -1,0 +1,61 @@
+@startuml
+
+abstract class Task {
+    +task_id : int
+    +task_name : str
+    +deadline : str
+    +status : str
+    +priority : str
+    +color : str
+    __
+    +__init__(task_id, task_name, deadline, status, priority) : void
+    +color_your_task() : str
+}
+
+class PersonalTask {
+    + color_your_task(): str
+}
+
+class WorkTask {
+    + color_your_task(): str
+}
+
+class TaskManagement {
+    -task_list : List<Task>
+    __
+    +__init__() : void
+    +add_task(task : Task) : void
+    +get_task_by_id(task_id : int) : Task
+}
+
+
+class TaskEditing {
+    - taskManagement: TaskManagement
+    __
+    + __init__(tm: TaskManagement)
+    + find_task(task_id: int): Task
+    + update_status(task_id: int, new_status: str): void
+    + mark_status_completed(task_id: int): void
+    + update_priority(task_id: int, new_priority: str): void
+    + update_deadline(task_id: int, new_deadline: str): void
+}
+
+class TaskTracking {
+    -task_management : TaskManagement
+    __
+    +__init__(task_management : TaskManagement)
+    +get_task_status(task_id : int) : None
+    +get_task_deadline(task_id : int) : None
+    +get_task_color(task_id : int) : None
+}
+
+' Inheritance
+PersonalTask -|> Task
+WorkTask -|> Task
+
+' Aggregation / Association
+TaskManagement "1" o-- "*" Task : manages >
+TaskEditing --> TaskManagement : uses >
+TaskTracking --> TaskManagement : uses >
+
+@enduml and tracking tasks.
