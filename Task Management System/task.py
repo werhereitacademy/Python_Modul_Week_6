@@ -12,15 +12,12 @@ class Task(ABC):         #soyut sinif
 
     @abstractmethod
     def color_your_task(self) -> str:
-        pass
-            return -1
-        
+        pass        
 
 class PersonalTask(Task):
     def color_your_task(self) -> str:
         return "Blue"
     
-
 class WorkTask(Task):
     def color_your_task(self) -> str:
         return "Yellow"

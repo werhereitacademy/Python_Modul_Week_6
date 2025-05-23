@@ -4,7 +4,7 @@
         "task_id": 1,
         "task_name": "Read a book",
         "deadline": "2025-05-15",
-        "status": "In Progress",
+        "status": "Completed",
         "priority": "High",
         "color": "Blue"
     },
