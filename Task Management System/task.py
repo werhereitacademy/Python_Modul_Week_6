@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from datetime import datetime
 
 class Task(ABC):         #soyut sinif
     def __init__(self, task_id: int, task_name: str, deadline: str, status: str, priority: str):
@@ -14,13 +13,6 @@ class Task(ABC):         #soyut sinif
     @abstractmethod
     def color_your_task(self) -> str:
         pass
-
-    def days_to_accomplish_task(self) -> int:
-        today = datetime.today()
-        try:
-            deadline_date = datetime.strptime(self.deadline, "%Y-%m-%d")
-            return (deadline_date - today).days
-        except ValueError:
             return -1
         
 
