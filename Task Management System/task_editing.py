@@ -1,37 +1,80 @@
+from task_management import TaskManagement
+from task import Task 
+
 class TaskEditing:
-    # Constructor: receives a list of all tasks and stores it
-    # Constructor: ontvangt een lijst met alle taken en slaat deze op
-    def __init__(self, task_list):
-        self.task_list = task_list
+    """
+    A class to handle editing operations for tasks such as status, priority, and deadlines.
+    
+    Attributes:
+        taskManagement (TaskManagement): An instance of TaskManagement which contains the task list.
+    """
 
-    # Find a task by its ID
-    # Zoek een taak op basis van het ID
-    def find_task(self, task_id):
-        for task in self.task_list:
-            if task.task_id == task_id:
-                return task
-        raise ValueError("Task not found.")  # Taak niet gevonden
+    def __init__(self, tm: TaskManagement) -> None:
+        """
+        Initialize the TaskEditing instance with a TaskManagement object.
 
-    # Update the status of a task (e.g., from Pending to Completed)
-    # Wijzig de status van een taak (bijv. van 'In afwachting' naar 'Voltooid')
-    def update_status(self, task_id, new_status):
+        Args:
+            tm (TaskManagement): The task management instance containing all tasks.
+        """
+        self.taskManagement = tm
+
+    def find_task(self, task_id: int) -> Task:
+        """
+        Find and return a task by its ID.
+
+        Args:
+            task_id (int): The unique ID of the task.
+
+        Returns:
+            Task: The task object that matches the given ID.
+
+        Raises:
+            ValueError: If the task with the specified ID is not found.
+        """
+        return self.taskManagement.get_task_by_id(task_id)
+    
+
+    def update_status(self, task_id: int, new_status: str) -> None:
+        """
+        Update the status of a specific task.
+
+        Args:
+            task_id (int): The ID of the task to update.
+            new_status (str): The new status to assign to the task.
+        """
         task = self.find_task(task_id)
         task.status = new_status
-        print(f"The status of '{task.task_name}' has been updated to '{new_status}'.")
-        # De status van '{task.task_name}' is bijgewerkt naar '{new_status}'
+        
 
-    # Update the priority of a task (e.g., Low, Medium, High)
-    # Wijzig de prioriteit van een taak (bijv. Laag, Gemiddeld, Hoog)
-    def update_priority(self, task_id, new_priority):
+    def mark_status_completed(self, task_id: int) -> None:
+        """
+        Mark a task's status as 'Completed'.
+
+        Args:
+            task_id (int): The ID of the task to update.
+        """
+        self.update_status(task_id, "Completed")
+
+    def update_priority(self, task_id: int, new_priority: str) -> None:
+        """
+        Update the priority level of a specific task.
+
+        Args:
+            task_id (int): The ID of the task to update.
+            new_priority (str): The new priority value (e.g., Low, Medium, High).
+        """
         task = self.find_task(task_id)
         task.priority = new_priority
-        print(f"The priority of '{task.task_name}' has been updated to '{new_priority}'.")
-        # De prioriteit van '{task.task_name}' is bijgewerkt naar '{new_priority}'
+        
 
-    # Update the deadline of a task (e.g., change due date)
-    # Wijzig de deadline van een taak (bijv. wijzig de einddatum)
-    def update_deadline(self, task_id, new_deadline):
+    def update_deadline(self, task_id: int, new_deadline: str) -> None:
+        """
+        Update the deadline of a specific task.
+
+        Args:
+            task_id (int): The ID of the task to update.
+            new_deadline (str): The new deadline in 'YYYY-MM-DD' format.
+        """
         task = self.find_task(task_id)
         task.deadline = new_deadline
-        print(f"The deadline of '{task.task_name}' has been updated to '{new_deadline}'.")
-        # De deadline van '{task.task_name}' is bijgewerkt naar '{new_deadline}'
+        

@@ -127,7 +127,7 @@ def show_tasks(tm1: tm.TaskManagement) -> None:
     Args:
         tm1 (TaskManagement): The task management object.
     """
-    ttrack = tt.TaskTracking(tm1)
+
     tlist = tm1.task_list
     if not tlist:
         menu.show_message("⚠️ No tasks available.")
@@ -137,7 +137,7 @@ def show_tasks(tm1: tm.TaskManagement) -> None:
     menu.show_message("")
 
 
-def add_task(file_path: str, tm1: tm.TaskManagement) -> None:
+def add_task(tm1: tm.TaskManagement, file_path: str) -> None:
     """
     Add a new task and save it to file.
     
@@ -181,28 +181,39 @@ def add_task(file_path: str, tm1: tm.TaskManagement) -> None:
         menu.show_message(f"\n❌ Error: {e}")
 
 
-def edit_task(tm1: tm.TaskManagement) -> None:
+def edit_task(tm1: tm.TaskManagement, file_path: str) -> None:
     """
-    Edit an existing task's status, priority, deadline, or mark it as completed.
-    
+    Allows the user to edit an existing task by updating its status, 
+    priority, deadline, or marking it as completed. Updates are also 
+    saved to the specified JSON file.
+
     Args:
-        tm1 (TaskManagement): The task management object.
+        tm1 (TaskManagement): An instance of the TaskManagement class containing the task list.
+        file_path (str): Path to the JSON file where updated tasks will be saved.
     """
     tedit = te.TaskEditing(tm1)
-    menu.header("✏️   Edit a Task")
-    tm1.display_tasks()
-    task_id = int(input("\nEnter the ID of the task you want to edit: "))
-    task_to_edit = tedit.get_task_by_id(task_id)
-    if not task_to_edit:
+
+    # Display editing options to the user
+    editing_option = menu.show_menu("✏️   Edit a Task", {
+        "1": "Change Task Status",
+        "2": "Change Priority",
+        "3": "Set New Deadline",
+        "4": "Mark Task as Completed"
+    }, width=40)
+
+    try:
+        task_id = int(input("\nEnter the ID of the task you want to edit: ").strip())
+    except ValueError:
+        menu.show_message("⚠️ Invalid input. Please enter a numeric task ID.")
+        return
+
+    try:
+        task_to_edit = tedit.find_task(task_id)
+    except ValueError:
         menu.show_message("⚠️ Task not found.")
         return
 
-    editing_option = menu.show_options("Select an option to edit", {
-        "1": "Set Task Status",
-        "2": "Set Priority",
-        "3": "Set New Deadline",
-        "4": "Mark Task as Completed"
-    })
+    updated = False
 
     if editing_option == "1":
         new_status = menu.show_options("Select New Status", {
@@ -210,31 +221,44 @@ def edit_task(tm1: tm.TaskManagement) -> None:
             "2": "In Progress",
             "3": "Pending"
         })
-        tedit.set_task_status(task_id, new_status)
+        tedit.update_status(task_id, new_status)
+        updated = True
+
     elif editing_option == "2":
         new_priority = menu.show_options("Select New Priority", {
             "1": "Low",
             "2": "Medium",
             "3": "High"
         })
-        tedit.set_prioritization(task_id, new_priority)
+        tedit.update_priority(task_id, new_priority)
+        updated = True
+
     elif editing_option == "3":
         new_deadline = get_date_input("Enter New Deadline")
-        tedit.set_new_date(task_id, new_deadline)
+        tedit.update_deadline(task_id, new_deadline)
+        updated = True
+
     elif editing_option == "4":
         tedit.mark_status_completed(task_id)
+        updated = True
+
     else:
         menu.show_message("⚠️ Invalid option selected.")
         return
 
-    print("✅ Task updated successfully.")
-    menu.show_message(
-        f"🆔 ID: {task_to_edit.task_id}\n"
-        f"📌 Name: {task_to_edit.task_name}\n"
-        f"📊 Status: {task_to_edit.status}\n"
-        f"⚡ Priority: {task_to_edit.priority}\n"
-        f"📅 Deadline: {task_to_edit.deadline}"
-    )
+    if updated:
+        # Persist updated task list to file
+        save_tasks_to_file(file_path, tm1.task_list)
+
+        print("\n✅ Task updated successfully.\n")
+        menu.show_message(
+            f"🆔 ID: {task_to_edit.task_id}\n"
+            f"📌 Name: {task_to_edit.task_name}\n"
+            f"📊 Status: {task_to_edit.status}\n"
+            f"⚡ Priority: {task_to_edit.priority}\n"
+            f"📅 Deadline: {task_to_edit.deadline}"
+        )
+
 
 
 def main() -> None:
@@ -253,9 +277,9 @@ def main() -> None:
             menu.header("📋   Task List")
             show_tasks(tm1)
         elif choice == "2":
-            add_task(task_file, tm1)
+            add_task(tm1, task_file)
         elif choice == "3":
-            edit_task(tm1)
+            edit_task(tm1, task_file)
         elif choice == "0":
             print("Exiting the program...\n")
             break

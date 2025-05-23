@@ -28,11 +28,12 @@ class TaskManagement {
 
 class TaskEditing {
     - taskManagement
-    + set_task_status(task_id: int, status: str): None
-    + set_prioritization(task_id: int, priority: str): None
-    + set_new_date(task_id: int, deadline: str): None
+    + __init__(tm: TaskManagement) -> None:
+    + find_task(task_id: int) -> Task:
+    + update_status(task_id, new_status): None
+    + update_priority(task_id, new_priority): None
+    + update_deadline(task_id, new_deadline): None
     + mark_status_completed(task_id: int): None
-    + get_task_by_id(task_id: int): Task | None
 }
 
 class TaskTracking {

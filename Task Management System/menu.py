@@ -80,7 +80,7 @@ def show_list(title: str, column_names: List[str], list_items: List[Any]) -> Non
     # ANSI color codes
     color_map = {
         "Blue": "\033[94m",
-        "Geel": "\033[93m",
+        "Yellow": "\033[93m",
         "Red": "\033[91m",
         "Green": "\033[92m",
         "Reset": "\033[0m"

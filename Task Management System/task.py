@@ -31,4 +31,4 @@ class PersonalTask(Task):
 
 class WorkTask(Task):
     def color_your_task(self) -> str:
-        return "Geel"
+        return "Yellow"

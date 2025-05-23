@@ -3,9 +3,9 @@
         "task_type": "PersonalTask",
         "task_id": 1,
         "task_name": "Read a book",
-        "deadline": "2025-06-10",
-        "status": "Pending",
-        "priority": "Low",
+        "deadline": "2025-05-15",
+        "status": "In Progress",
+        "priority": "High",
         "color": "Blue"
     },
     {
@@ -13,9 +13,9 @@
         "task_id": 2,
         "task_name": "Prepare project report",
         "deadline": "2025-05-30",
-        "status": "In Progress",
+        "status": "Completed",
         "priority": "High",
-        "color": "Geel"
+        "color": "Yellow"
     },
     {
         "task_type": "PersonalTask",
@@ -33,7 +33,7 @@
         "deadline": "2025-05-25",
         "status": "Completed",
         "priority": "Low",
-        "color": "Geel"
+        "color": "Yellow"
     },
     {
         "task_type": "WorkTask",
@@ -42,7 +42,7 @@
         "deadline": "2025-06-01",
         "status": "In Progress",
         "priority": "High",
-        "color": "Geel"
+        "color": "Yellow"
     },
     {
         "task_type": "PersonalTask",
@@ -60,7 +60,7 @@
         "deadline": "2025-06-02",
         "status": "Pending",
         "priority": "Medium",
-        "color": "Geel"
+        "color": "Yellow"
     },
     {
         "task_type": "PersonalTask",
@@ -78,7 +78,7 @@
         "deadline": "2025-06-03",
         "status": "Pending",
         "priority": "High",
-        "color": "Geel"
+        "color": "Yellow"
     },
     {
         "task_type": "PersonalTask",
@@ -96,7 +96,7 @@
         "deadline": "1956-12-6",
         "status": "Completed",
         "priority": "Medium",
-        "color": "Geel"
+        "color": "Yellow"
     },
     {
         "task_type": "PersonalTask",

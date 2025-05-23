@@ -1,15 +1,43 @@
-class TaskManagement:
-    def __init__(self):
-        self.task_list = []
+from typing import List
+from task import Task  
 
-    def add_task(self, task):
+class TaskManagement:
+    """
+    Manages a list of tasks and provides methods to add, retrieve, and display them.
+    
+    Attributes:
+        task_list (List[Task]): A list of all task objects.
+    """
+
+    def __init__(self) -> None:
+        """
+        Initialize an empty task list.
+        """
+        self.task_list: List[Task] = []
+
+    def add_task(self, task: Task) -> None:
+        """
+        Add a task to the task list.
+
+        Args:
+            task (Task): The task object to be added.
+        """
         self.task_list.append(task)
 
-    def display_tasks(self):
-        for task in self.task_list:
-            print(f"ID: {task.task_id}, Name: {task.task_name}, Deadline: {task.deadline}, Status: {task.status}, Priority: {task.priority}, Color: {task.color}")
+    def get_task_by_id(self, task_id: int) -> Task:
+        """
+        Retrieve a task by its unique ID.
 
-    def get_task_by_id(self, task_id : int) -> None:
+        Args:
+            task_id (int): The ID of the task to retrieve.
+
+        Returns:
+            Task: The task object with the specified ID.
+
+        Raises:
+            ValueError: If no task with the given ID is found.
+        """
         for task in self.task_list:
             if task.task_id == task_id:
                 return task
+        raise ValueError(f"No task found with ID: {task_id}")
